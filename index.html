@@ -1,657 +1,1158 @@
 <!DOCTYPE html>
-<html lang="pt-BR" style="background:#08050f;">
+<html lang="pt-BR">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>MLX Flow — Listas Prontas para Prospecção</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
-<style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --bg:#08050f;
-  --bg2:#0f0a1a;
-  --card:#130e1f;
-  --purple:#8b5cf6;
-  --purp2:#a78bfa;
-  --pink:#e879f9;
-  --text:#f0ebff;
-  --muted:#8b7aad;
-  --border:rgba(139,92,246,0.15);
-  --r:14px;
-}
-html{scroll-behavior:smooth}
-body{background:#08050f;color:#f0ebff;font-family:'Outfit',sans-serif;font-size:16px;line-height:1.6;overflow-x:hidden}
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Agenda Cheia Barber – 30 Posts Prontos para Lotar Sua Barbearia</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:ital,wght@0,400;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --preto: #0a0a0a;
+      --ouro: #D4A017;
+      --ouro-claro: #F0C040;
+      --cinza-escuro: #1a1a1a;
+      --cinza-medio: #2a2a2a;
+      --cinza-texto: #aaa;
+      --branco: #f5f5f0;
+      --verde: #22c55e;
+    }
 
-/* TOPBAR */
-.topbar{
-  background:linear-gradient(90deg,var(--purple),var(--pink),var(--purple));
-  background-size:200%;animation:shimmer 3s linear infinite;
-  text-align:center;padding:10px 16px;font-size:13px;font-weight:600;color:#fff;letter-spacing:.02em;
-}
-@keyframes shimmer{0%{background-position:0%}100%{background-position:200%}}
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-/* NAV */
-nav{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;max-width:900px;margin:0 auto}
-.logo{font-family:'Bebas Neue',cursive;font-size:26px;letter-spacing:.08em;background:linear-gradient(135deg,#fff,var(--purp2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.logo span{-webkit-text-fill-color:var(--pink)}
-.nav-cta{background:linear-gradient(135deg,var(--purple),var(--pink));color:#fff;border:none;padding:10px 22px;border-radius:100px;font-family:'Outfit',sans-serif;font-size:13px;font-weight:700;cursor:pointer;text-decoration:none;transition:transform .2s,box-shadow .2s;box-shadow:0 0 24px rgba(139,92,246,.35)}
-.nav-cta:hover{transform:scale(1.05);box-shadow:0 0 36px rgba(139,92,246,.5)}
+    html { scroll-behavior: smooth; }
 
-/* LAYOUT */
-.wrap{max-width:900px;margin:0 auto;padding:0 20px}
-.wrap-sm{max-width:600px;margin:0 auto;padding:0 20px}
-section{padding:60px 0}
-@media(max-width:640px){section{padding:44px 0}}
+    body {
+      background: var(--preto);
+      color: var(--branco);
+      font-family: 'Barlow', sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
 
-/* TYPOGRAPHY */
-.display{font-family:'Bebas Neue',cursive;font-size:clamp(48px,11vw,88px);line-height:.93;letter-spacing:.02em}
-h2{font-family:'Bebas Neue',cursive;font-size:clamp(30px,6vw,50px);line-height:1;letter-spacing:.03em}
-h3{font-family:'Outfit',sans-serif;font-size:16px;font-weight:700;line-height:1.3}
+    /* ── UTILS ── */
+    .container { max-width: 480px; margin: 0 auto; padding: 0 20px; }
+    .tag {
+      display: inline-block;
+      background: var(--ouro);
+      color: var(--preto);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      border-radius: 2px;
+      margin-bottom: 16px;
+    }
 
-.chip{
-  display:inline-flex;align-items:center;gap:6px;
-  background:rgba(139,92,246,.1);border:1px solid rgba(139,92,246,.3);
-  color:var(--purp2);font-size:11px;font-weight:600;
-  letter-spacing:.14em;text-transform:uppercase;
-  padding:5px 13px;border-radius:100px;margin-bottom:18px;
-}
-.chip::before{content:'';width:5px;height:5px;background:var(--pink);border-radius:50%;animation:blink 2s infinite}
-@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+    /* ── CTA BUTTON ── */
+    .btn {
+      display: block;
+      width: 100%;
+      background: linear-gradient(135deg, var(--ouro), var(--ouro-claro));
+      color: var(--preto);
+      font-family: 'Barlow', sans-serif;
+      font-size: 17px;
+      font-weight: 800;
+      text-align: center;
+      padding: 18px 24px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      text-decoration: none;
+      letter-spacing: 0.5px;
+      box-shadow: 0 6px 30px rgba(212,160,23,0.35);
+      transition: transform 0.15s, box-shadow 0.15s;
+      position: relative;
+      overflow: hidden;
+    }
+    .btn::after {
+      content: '';
+      position: absolute;
+      top: 0; left: -100%;
+      width: 60%;
+      height: 100%;
+      background: rgba(255,255,255,0.18);
+      transform: skewX(-20deg);
+      transition: left 0.4s;
+    }
+    .btn:hover::after { left: 150%; }
+    .btn:hover { transform: translateY(-2px); box-shadow: 0 10px 40px rgba(212,160,23,0.5); }
+    .btn:active { transform: translateY(0); }
 
-/* BUTTONS */
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-family:'Outfit',sans-serif;font-weight:700;border:none;cursor:pointer;text-decoration:none;transition:all .22s cubic-bezier(.4,0,.2,1);white-space:nowrap}
-.btn-main{background:linear-gradient(135deg,var(--purple) 0%,var(--pink) 100%);color:#fff;padding:17px 36px;border-radius:100px;font-size:16px;box-shadow:0 0 40px rgba(139,92,246,.4),0 4px 16px rgba(0,0,0,.3);width:100%;max-width:420px;position:relative;overflow:hidden}
-.btn-main::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.15),transparent);border-radius:inherit;pointer-events:none}
-.btn-main:hover{transform:translateY(-2px);box-shadow:0 0 60px rgba(139,92,246,.6),0 8px 24px rgba(0,0,0,.4)}
-.btn-main:active{transform:scale(.98)}
-.btn-plan{background:linear-gradient(135deg,var(--purple),var(--pink));color:#fff;padding:15px 28px;border-radius:100px;font-size:15px;box-shadow:0 0 28px rgba(139,92,246,.35);width:100%}
-.btn-plan:hover{transform:translateY(-2px);box-shadow:0 0 44px rgba(139,92,246,.55)}
-.btn-ghost{background:transparent;color:var(--purp2);padding:14px 28px;border-radius:100px;font-size:15px;border:1.5px solid rgba(139,92,246,.35);width:100%}
-.btn-ghost:hover{background:rgba(139,92,246,.08);border-color:var(--purple)}
+    .btn-sub {
+      font-size: 11px;
+      font-weight: 600;
+      opacity: 0.75;
+      display: block;
+      margin-top: 4px;
+      letter-spacing: 0;
+    }
 
-/* HERO */
-#hero{padding:28px 0 52px;position:relative;overflow:hidden}
-.hero-glow{position:absolute;top:-150px;left:50%;transform:translateX(-50%);width:600px;height:600px;background:radial-gradient(circle,rgba(139,92,246,.18) 0%,transparent 70%);pointer-events:none}
-.hero-inner{text-align:center;position:relative;z-index:1}
-.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(139,92,246,.1);border:1px solid rgba(139,92,246,.25);padding:8px 18px;border-radius:100px;font-size:13px;color:var(--purp2);margin-bottom:22px}
-.badge-dot{width:7px;height:7px;background:#22c55e;border-radius:50%;box-shadow:0 0 8px #22c55e;animation:blink 2s infinite}
-.display{background:linear-gradient(160deg,#fff 0%,#ddd0ff 45%,var(--pink) 90%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:20px}
-.hero-sub{font-size:clamp(15px,2.5vw,17px);color:var(--muted);max-width:500px;margin:0 auto 30px;font-weight:400}
-.hero-cta-wrap{display:flex;flex-direction:column;align-items:center;gap:10px}
-.hero-proof{font-size:12px;color:var(--muted);display:flex;align-items:center;justify-content:center;gap:5px}
-.urgency-bar{background:rgba(234,179,8,.08);border:1px solid rgba(234,179,8,.2);border-radius:12px;padding:12px 18px;font-size:13px;color:#fbbf24;display:flex;align-items:center;gap:10px;max-width:460px;margin:18px auto 0}
+    /* ── TOPBAR ── */
+    .topbar {
+      background: var(--ouro);
+      color: var(--preto);
+      text-align: center;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      padding: 8px 16px;
+      text-transform: uppercase;
+    }
 
-/* STATS */
-.stats-bar{background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:24px 0}
-.stats-row{display:flex;justify-content:space-around;align-items:center;flex-wrap:wrap;gap:12px}
-.stat{text-align:center;padding:0 10px}
-.stat-n{font-family:'Bebas Neue',cursive;font-size:clamp(34px,6vw,48px);background:linear-gradient(135deg,var(--purp2),var(--pink));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1}
-.stat-l{font-size:12px;color:var(--muted);margin-top:4px}
+    /* ── HERO ── */
+    .hero {
+      padding: 48px 0 40px;
+      text-align: center;
+      position: relative;
+      background: radial-gradient(ellipse at 50% 0%, #2a1f00 0%, var(--preto) 70%);
+    }
 
-/* DOR */
-#dor{background:var(--bg)}
-.dor-list{display:flex;flex-direction:column;gap:10px;margin-top:32px}
-.dor-item{display:flex;align-items:flex-start;gap:14px;background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:18px}
-.dor-icon{font-size:22px;flex-shrink:0;margin-top:2px}
-.dor-item h3{font-size:15px;margin-bottom:4px}
-.dor-item p{font-size:13px;color:var(--muted)}
+    .hero-icon {
+      font-size: 52px;
+      display: block;
+      margin-bottom: 16px;
+      filter: drop-shadow(0 0 20px rgba(212,160,23,0.4));
+      animation: float 3s ease-in-out infinite;
+    }
+    @keyframes float {
+      0%,100% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
+    }
 
-/* SOLUÇÃO */
-#solucao{background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
-.solucao-text{margin-bottom:28px}
-.solucao-text h2{margin-bottom:14px}
-.solucao-text p{font-size:15px;color:var(--muted);margin-bottom:10px}
-.preview-card{background:var(--card);border:1px solid rgba(139,92,246,.25);border-radius:var(--r);overflow:hidden}
-.preview-header{background:rgba(139,92,246,.1);padding:11px 16px;font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;display:flex;align-items:center;gap:8px;border-bottom:1px solid var(--border)}
-.preview-header::before{content:'';width:7px;height:7px;background:#22c55e;border-radius:50%;box-shadow:0 0 6px #22c55e}
-.preview-row{display:grid;grid-template-columns:1fr 1.1fr .8fr;gap:6px;padding:10px 16px;border-bottom:1px solid rgba(139,92,246,.06);font-size:13px}
-.preview-row:last-child{border-bottom:none}
-.preview-row.head{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.1em}
-.preview-row span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.tel{color:var(--purp2)}
-.cidade{color:var(--muted)}
-.preview-foot{padding:10px 16px;font-size:11px;color:var(--muted);text-align:center;background:rgba(139,92,246,.04)}
+    .hero h1 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 38px;
+      line-height: 1.05;
+      letter-spacing: 1px;
+      color: var(--branco);
+      margin-bottom: 16px;
+    }
+    .hero h1 span { color: var(--ouro); }
 
-/* COMO FUNCIONA */
-#como{background:var(--bg)}
-.steps-list{display:flex;flex-direction:column;gap:10px;margin-top:32px}
-.step{display:flex;align-items:flex-start;gap:14px;background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:18px;transition:border-color .2s,transform .2s}
-.step:hover{border-color:rgba(139,92,246,.4);transform:translateX(3px)}
-.step-num{width:42px;height:42px;border-radius:50%;flex-shrink:0;background:linear-gradient(135deg,var(--purple),var(--pink));color:#fff;font-family:'Bebas Neue',cursive;font-size:20px;display:flex;align-items:center;justify-content:center;box-shadow:0 0 18px rgba(139,92,246,.4)}
-.step h3{font-size:15px;margin-bottom:4px}
-.step p{font-size:13px;color:var(--muted)}
+    .hero p {
+      font-size: 16px;
+      color: var(--cinza-texto);
+      max-width: 340px;
+      margin: 0 auto 28px;
+      line-height: 1.5;
+    }
 
-/* BENEFÍCIOS */
-#beneficios{background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
-.benefits-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:28px}
-@media(max-width:480px){.benefits-grid{grid-template-columns:1fr}}
-.benefit{display:flex;align-items:flex-start;gap:12px;background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:16px;transition:border-color .2s}
-.benefit:hover{border-color:rgba(139,92,246,.35)}
-.b-icon{font-size:20px;flex-shrink:0;margin-top:1px}
-.benefit h4{font-size:14px;font-weight:700;margin-bottom:3px}
-.benefit p{font-size:12px;color:var(--muted)}
+    .hero-social-proof {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 28px;
+      font-size: 13px;
+      color: var(--cinza-texto);
+    }
+    .stars { color: var(--ouro); font-size: 14px; }
 
-/* SOCIAL PROOF STRIP */
-.sp-strip{background:var(--bg);border-top:1px solid var(--border);padding:28px 0}
-.sp-inner{display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center}
-.sp-avatars{display:flex;justify-content:center}
-.sp-av{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--purple),var(--pink));border:2.5px solid var(--bg);margin-left:-10px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#fff}
-.sp-av:first-child{margin-left:0}
-.sp-stars{color:#f59e0b;letter-spacing:3px;font-size:14px}
-.sp-text{font-size:13px;color:var(--muted)}
-.sp-text strong{color:var(--text)}
+    /* ── MOCKUP VISUAL ── */
+    .mockup-section {
+      padding: 0 0 40px;
+      text-align: center;
+    }
 
-/* DEPOIMENTOS */
-#depoimentos{background:var(--bg2);border-top:1px solid var(--border)}
-.dep-list{display:flex;flex-direction:column;gap:10px;margin-top:28px}
-.dep-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:20px;position:relative;transition:border-color .2s,transform .2s}
-.dep-card:hover{border-color:rgba(139,92,246,.35);transform:translateY(-2px)}
-.dep-q{position:absolute;top:12px;right:14px;font-size:44px;line-height:1;font-family:'Bebas Neue',cursive;color:rgba(139,92,246,.1);pointer-events:none}
-.dep-stars{color:#f59e0b;font-size:13px;letter-spacing:2px;margin-bottom:10px}
-.dep-text{font-size:14px;color:var(--muted);line-height:1.7;margin-bottom:14px}
-.dep-author{display:flex;align-items:center;gap:10px}
-.dep-av{width:34px;height:34px;border-radius:50%;flex-shrink:0;background:linear-gradient(135deg,var(--purple),var(--pink));color:#fff;font-weight:700;font-size:13px;display:flex;align-items:center;justify-content:center}
-.dep-name{font-size:13px;font-weight:700}
-.dep-role{font-size:12px;color:var(--muted)}
+    .phone-mockup {
+      position: relative;
+      display: inline-block;
+      width: 200px;
+    }
 
-/* PARA QUEM */
-#paraquem{background:var(--bg);border-top:1px solid var(--border)}
-.target-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:24px}
-.target{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:16px;text-align:center;transition:border-color .2s,transform .2s}
-.target:hover{border-color:rgba(139,92,246,.35);transform:translateY(-2px)}
-.t-emoji{font-size:26px;display:block;margin-bottom:8px}
-.target h4{font-size:14px;font-weight:700;margin-bottom:3px}
-.target p{font-size:12px;color:var(--muted)}
+    .phone-frame {
+      width: 200px;
+      height: 360px;
+      border: 3px solid #333;
+      border-radius: 32px;
+      background: var(--cinza-escuro);
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.6), 0 0 0 1px #444;
+    }
 
-/* PLANOS */
-#planos{background:var(--bg2);border-top:1px solid var(--border);position:relative;overflow:hidden}
-.planos-glow{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:500px;height:500px;background:radial-gradient(circle,rgba(139,92,246,.1) 0%,transparent 70%);pointer-events:none}
-.planos-list{display:flex;flex-direction:column;gap:12px;margin-top:28px;position:relative;z-index:1}
-.plan{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:22px;position:relative;transition:transform .22s,border-color .22s}
-.plan:hover{transform:translateY(-3px)}
-.plan.destaque{border-color:var(--purple);background:linear-gradient(160deg,rgba(139,92,246,.1) 0%,var(--card) 60%);box-shadow:0 0 40px rgba(139,92,246,.12)}
-.plan-badge{position:absolute;top:-11px;left:18px;background:linear-gradient(135deg,var(--purple),var(--pink));color:#fff;font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;padding:3px 13px;border-radius:100px;font-family:'Outfit',sans-serif}
-.plan-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:8px}
-.plan-name{font-family:'Bebas Neue',cursive;font-size:22px;letter-spacing:.06em;color:var(--purp2)}
-.plan-num{font-family:'Bebas Neue',cursive;font-size:38px;line-height:1;background:linear-gradient(135deg,#fff,var(--purp2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.plan-clabel{font-size:11px;color:var(--muted);text-align:right}
-.plan-price-row{display:flex;align-items:baseline;gap:6px;margin-bottom:14px;padding-bottom:14px;border-bottom:1px solid var(--border)}
-.plan-de{font-size:12px;color:var(--muted)}
-.plan-por{font-family:'Bebas Neue',cursive;font-size:36px;line-height:1;color:#fff}
-.plan-por sup{font-size:17px;vertical-align:super}
-.plan-features{list-style:none;margin-bottom:18px}
-.plan-features li{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted);padding:7px 0;border-bottom:1px solid rgba(255,255,255,.04)}
-.plan-features li:last-child{border-bottom:none}
-.plan-features li::before{content:'✓';color:#22c55e;font-size:12px;font-weight:700;flex-shrink:0}
-.plan-guarantee{display:flex;align-items:center;justify-content:center;gap:6px;font-size:11px;color:var(--muted);margin-top:10px}
-.plan-guarantee::before{content:'🔒'}
+    .phone-screen {
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(160deg, #1a1a1a 0%, #111 100%);
+      display: flex;
+      flex-direction: column;
+      padding: 16px 10px;
+      gap: 8px;
+    }
 
-/* ESCASSEZ */
-.scarcity-box{background:rgba(239,68,68,.07);border:1px solid rgba(239,68,68,.2);border-radius:12px;padding:13px 18px;display:flex;align-items:center;gap:10px;font-size:13px;color:#f87171;margin-bottom:24px}
+    .ig-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid #333;
+    }
 
-/* TRANSPARÊNCIA */
-.transp-box{background:rgba(139,92,246,.05);border:1px solid rgba(139,92,246,.15);border-radius:var(--r);padding:16px 18px;margin-top:28px;display:flex;align-items:flex-start;gap:12px}
-.transp-box p{font-size:13px;color:var(--muted);line-height:1.7}
-.transp-box strong{color:var(--text)}
+    .ig-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--ouro), #8B4513);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      border: 2px solid var(--ouro);
+    }
 
-/* CTA FINAL */
-#cta-final{background:var(--bg);padding:68px 0 52px;position:relative;overflow:hidden;text-align:center}
-.cta-glow{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:500px;height:500px;background:radial-gradient(circle,rgba(139,92,246,.12) 0%,transparent 70%);pointer-events:none}
-#cta-final .wrap-sm{position:relative;z-index:1}
-#cta-final h2{margin-bottom:14px}
-#cta-final p{font-size:15px;color:var(--muted);margin-bottom:28px}
-.cta-hint{font-size:12px;color:var(--muted);margin-top:12px}
-.cta-hint strong{color:var(--purp2)}
+    .ig-name { font-size: 11px; font-weight: 700; color: var(--branco); }
+    .ig-followers { font-size: 9px; color: var(--cinza-texto); }
 
-/* DIVIDER */
-.divider{height:1px;background:linear-gradient(90deg,transparent,var(--purple),transparent);opacity:.2}
+    .ig-post {
+      width: 100%;
+      height: 140px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      position: relative;
+      overflow: hidden;
+    }
+    .ig-post-1 { background: linear-gradient(135deg, #1a0a00, #3d1a00); border: 1px solid #D4A017; }
+    .ig-post-2 { background: linear-gradient(135deg, #0a1a0a, #1a3a1a); border: 1px solid #22c55e; }
 
-/* FOOTER */
-footer{background:var(--bg2);border-top:1px solid var(--border);padding:28px 20px;text-align:center}
-.footer-logo{font-family:'Bebas Neue',cursive;font-size:20px;letter-spacing:.08em;background:linear-gradient(135deg,#fff,var(--purp2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:6px}
-footer p{font-size:12px;color:var(--muted);margin-top:5px}
+    .ig-post-label {
+      position: absolute;
+      bottom: 6px;
+      left: 6px;
+      font-size: 8px;
+      font-weight: 800;
+      background: var(--ouro);
+      color: var(--preto);
+      padding: 2px 6px;
+      border-radius: 2px;
+      letter-spacing: 1px;
+    }
 
-/* STICKY MOBILE */
-.sticky-cta{display:none;position:fixed;bottom:0;left:0;right:0;background:linear-gradient(to top,var(--bg) 80%,transparent);padding:14px 20px 18px;z-index:100}
-@media(max-width:640px){.sticky-cta{display:block}}
-.sticky-cta .btn-main{max-width:100%;font-size:15px;padding:15px}
+    .ig-stats {
+      display: flex;
+      gap: 12px;
+      font-size: 9px;
+      color: var(--cinza-texto);
+    }
+    .ig-stat-high { color: var(--ouro); font-weight: 800; }
 
-/* ══ WHATSAPP FLOATING BUTTON ══ */
-.whatsapp-float {
-  position: fixed;
-  bottom: 28px;
-  right: 24px;
-  z-index: 999;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  text-decoration: none;
-  animation: wpp-enter .5s cubic-bezier(.34,1.56,.64,1) both;
-  animation-delay: 1.2s;
-  opacity: 0;
-}
+    .notification-bubble {
+      position: absolute;
+      top: -10px;
+      right: -10px;
+      background: var(--verde);
+      color: white;
+      font-size: 9px;
+      font-weight: 800;
+      padding: 4px 8px;
+      border-radius: 20px;
+      white-space: nowrap;
+      animation: pulse 2s infinite;
+      box-shadow: 0 4px 15px rgba(34,197,94,0.4);
+    }
+    @keyframes pulse {
+      0%,100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
 
-@keyframes wpp-enter {
-  from { opacity:0; transform:scale(.6) translateY(20px); }
-  to   { opacity:1; transform:scale(1) translateY(0); }
-}
+    /* ── DOR ── */
+    .pain-section {
+      padding: 48px 0;
+      background: var(--cinza-escuro);
+    }
 
-/* Tooltip label — aparece no hover */
-.whatsapp-float .wpp-label {
-  background: linear-gradient(135deg, var(--purple), #7c3aed);
-  color: #fff;
-  font-family: 'Outfit', sans-serif;
-  font-size: 13px;
-  font-weight: 600;
-  padding: 8px 14px;
-  border-radius: 100px;
-  white-space: nowrap;
-  box-shadow: 0 4px 20px rgba(139,92,246,.45);
-  opacity: 0;
-  transform: translateX(10px);
-  transition: opacity .25s ease, transform .25s ease;
-  pointer-events: none;
-}
+    .pain-section h2 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 30px;
+      line-height: 1.1;
+      margin-bottom: 24px;
+    }
 
-.whatsapp-float:hover .wpp-label {
-  opacity: 1;
-  transform: translateX(0);
-}
+    .pain-list { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+    .pain-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      font-size: 15px;
+      color: var(--cinza-texto);
+      line-height: 1.4;
+    }
+    .pain-icon {
+      flex-shrink: 0;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: #3a1a1a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      margin-top: 2px;
+    }
 
-/* Ícone principal */
-.whatsapp-float .wpp-btn {
-  width: 58px;
-  height: 58px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, var(--purple) 0%, #6d28d9 50%, var(--pink) 100%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow:
-    0 0 0 0 rgba(139,92,246,.6),
-    0 8px 28px rgba(139,92,246,.5),
-    0 2px 8px rgba(0,0,0,.4);
-  transition: transform .22s cubic-bezier(.34,1.56,.64,1), box-shadow .22s;
-  animation: wpp-pulse 2.8s ease-in-out infinite;
-  animation-delay: 2s;
-  flex-shrink: 0;
-  position: relative;
-}
+    .pain-highlight {
+      background: linear-gradient(135deg, #1a0a0a, #2a1010);
+      border: 1px solid #5a2020;
+      border-radius: 8px;
+      padding: 16px;
+      margin-top: 24px;
+      font-size: 16px;
+      font-weight: 700;
+      color: #ff6b6b;
+      text-align: center;
+    }
 
-@keyframes wpp-pulse {
-  0%,100% { box-shadow: 0 0 0 0 rgba(139,92,246,.55), 0 8px 28px rgba(139,92,246,.5), 0 2px 8px rgba(0,0,0,.4); }
-  50%      { box-shadow: 0 0 0 12px rgba(139,92,246,.0), 0 8px 28px rgba(139,92,246,.5), 0 2px 8px rgba(0,0,0,.4); }
-}
+    /* ── SOLUÇÃO ── */
+    .solution-section {
+      padding: 52px 0;
+      text-align: center;
+      background: radial-gradient(ellipse at 50% 50%, #1a1200 0%, var(--preto) 70%);
+    }
 
-.whatsapp-float:hover .wpp-btn {
-  transform: scale(1.1);
-  box-shadow:
-    0 0 0 8px rgba(139,92,246,.15),
-    0 12px 36px rgba(139,92,246,.6),
-    0 2px 8px rgba(0,0,0,.4);
-  animation-play-state: paused;
-}
+    .solution-section h2 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 34px;
+      line-height: 1.05;
+      margin-bottom: 16px;
+    }
 
-/* SVG do WhatsApp dentro do botão */
-.whatsapp-float .wpp-btn svg {
-  width: 30px;
-  height: 30px;
-  fill: #fff;
-  filter: drop-shadow(0 1px 2px rgba(0,0,0,.2));
-}
+    .solution-section p {
+      font-size: 15px;
+      color: var(--cinza-texto);
+      margin-bottom: 24px;
+    }
 
-/* No mobile, desce um pouco pra não bater no sticky-cta */
-@media(max-width:640px) {
-  .whatsapp-float {
-    bottom: 86px;
-    right: 16px;
-  }
-  .whatsapp-float .wpp-btn {
-    width: 52px;
-    height: 52px;
-  }
-  .whatsapp-float .wpp-btn svg {
-    width: 26px;
-    height: 26px;
-  }
-  /* Label some no mobile pra não atrapalhar */
-  .whatsapp-float .wpp-label {
-    display: none;
-  }
-  
-  <!-- Meta Pixel -->
-<!-- Meta Pixel Code -->
-<script>
-!function(f,b,e,v,n,t,s)
-{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-n.queue=[];t=b.createElement(e);t.async=!0;
-t.src=v;s=b.getElementsByTagName(e)[0];
-s.parentNode.insertBefore(t,s)}(window, document,'script',
-'https://connect.facebook.net/en_US/fbevents.js');
-fbq('init', '2384055318695147');
-fbq('track', 'PageView');
-</script>
-<noscript>
-<img height="1" width="1" style="display:none"
-src="https://www.facebook.com/tr?id=2384055318695147&ev=PageView&noscript=1"/>
-</noscript>
-<!-- End Meta Pixel Code -->
+    /* ── O QUE VEM ── */
+    .includes-section {
+      padding: 52px 0;
+      background: var(--cinza-escuro);
+    }
 
-  
-}
-</style>
+    .includes-section h2 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 30px;
+      margin-bottom: 24px;
+    }
+
+    .include-card {
+      background: var(--cinza-medio);
+      border: 1px solid #333;
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .include-card::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 3px;
+      background: var(--ouro);
+    }
+
+    .include-emoji {
+      font-size: 32px;
+      flex-shrink: 0;
+      width: 48px;
+      text-align: center;
+    }
+
+    .include-text h3 {
+      font-size: 16px;
+      font-weight: 800;
+      color: var(--branco);
+      margin-bottom: 4px;
+    }
+    .include-text p { font-size: 13px; color: var(--cinza-texto); line-height: 1.4; }
+
+    /* ── BENEFÍCIOS ── */
+    .benefits-section { padding: 52px 0; }
+
+    .benefits-section h2 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 30px;
+      margin-bottom: 24px;
+      text-align: center;
+    }
+
+    .benefit-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+
+    .benefit-number {
+      flex-shrink: 0;
+      width: 36px;
+      height: 36px;
+      background: linear-gradient(135deg, var(--ouro), var(--ouro-claro));
+      color: var(--preto);
+      font-weight: 900;
+      font-size: 16px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .benefit-text h3 { font-size: 16px; font-weight: 800; margin-bottom: 4px; }
+    .benefit-text p { font-size: 14px; color: var(--cinza-texto); line-height: 1.4; }
+
+    /* ── BARBER VISUAL ── */
+    .barber-visual {
+      padding: 40px 0;
+      background: var(--cinza-escuro);
+      text-align: center;
+    }
+
+    .barber-scene {
+      background: linear-gradient(135deg, #0f0f0f, #1a1a00);
+      border: 1px solid #333;
+      border-radius: 12px;
+      padding: 28px 20px;
+      margin-bottom: 24px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .barber-scene::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 10px,
+        rgba(212,160,23,0.02) 10px,
+        rgba(212,160,23,0.02) 20px
+      );
+    }
+
+    .barber-emoji-group {
+      font-size: 44px;
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 16px;
+      position: relative;
+    }
+
+    .barber-scene h3 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 26px;
+      color: var(--ouro);
+      position: relative;
+    }
+
+    .barber-scene p {
+      font-size: 14px;
+      color: var(--cinza-texto);
+      margin-top: 8px;
+      position: relative;
+    }
+
+    .calendar-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 4px;
+      margin-top: 16px;
+      position: relative;
+    }
+
+    .cal-day {
+      aspect-ratio: 1;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      font-weight: 700;
+    }
+    .cal-empty { background: #222; color: #555; }
+    .cal-full { background: var(--ouro); color: var(--preto); }
+    .cal-partial { background: #2a2000; border: 1px solid var(--ouro); color: var(--ouro); }
+
+    /* ── OBJEÇÕES ── */
+    .objections-section {
+      padding: 52px 0;
+    }
+
+    .objections-section h2 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 30px;
+      margin-bottom: 24px;
+    }
+
+    .obj-card {
+      background: var(--cinza-escuro);
+      border-radius: 10px;
+      padding: 16px;
+      margin-bottom: 10px;
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+    }
+
+    .obj-check {
+      flex-shrink: 0;
+      color: var(--verde);
+      font-size: 18px;
+      margin-top: 2px;
+    }
+
+    .obj-text strong { display: block; font-size: 15px; margin-bottom: 4px; }
+    .obj-text span { font-size: 13px; color: var(--cinza-texto); }
+
+    /* ── OFERTA ── */
+    .offer-section {
+      padding: 52px 0;
+      background: radial-gradient(ellipse at 50% 0%, #2a1f00, var(--preto));
+      text-align: center;
+    }
+
+    .offer-section h2 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 32px;
+      margin-bottom: 8px;
+    }
+
+    .price-box {
+      background: var(--cinza-escuro);
+      border: 2px solid var(--ouro);
+      border-radius: 16px;
+      padding: 28px 20px;
+      margin: 24px 0;
+      position: relative;
+    }
+
+    .price-badge {
+      position: absolute;
+      top: -14px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--ouro);
+      color: var(--preto);
+      font-size: 11px;
+      font-weight: 900;
+      padding: 4px 16px;
+      border-radius: 20px;
+      letter-spacing: 1px;
+      white-space: nowrap;
+    }
+
+    .price-old {
+      font-size: 18px;
+      color: var(--cinza-texto);
+      text-decoration: line-through;
+      margin-bottom: 4px;
+    }
+
+    .price-new {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 72px;
+      color: var(--ouro);
+      line-height: 1;
+    }
+
+    .price-cents { font-size: 36px; }
+    .price-desc { font-size: 13px; color: var(--cinza-texto); margin-top: 8px; }
+
+    .urgency-bar {
+      background: linear-gradient(135deg, #3a0000, #1a0000);
+      border: 1px solid #ff4444;
+      border-radius: 8px;
+      padding: 12px 16px;
+      margin-bottom: 20px;
+      font-size: 13px;
+      color: #ff8888;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .urgency-dot {
+      width: 8px;
+      height: 8px;
+      background: #ff4444;
+      border-radius: 50%;
+      flex-shrink: 0;
+      animation: blink 1s infinite;
+    }
+    @keyframes blink {
+      0%,100% { opacity: 1; }
+      50% { opacity: 0.2; }
+    }
+
+    /* ── GARANTIA ── */
+    .guarantee-section {
+      padding: 40px 0;
+      background: var(--cinza-escuro);
+      text-align: center;
+    }
+
+    .guarantee-box {
+      border: 2px dashed #444;
+      border-radius: 12px;
+      padding: 24px;
+    }
+
+    .guarantee-icon { font-size: 48px; margin-bottom: 12px; display: block; }
+    .guarantee-box h3 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 26px;
+      color: var(--verde);
+      margin-bottom: 8px;
+    }
+    .guarantee-box p { font-size: 14px; color: var(--cinza-texto); line-height: 1.5; }
+
+    /* ── FAQ ── */
+    .faq-section { padding: 48px 0; }
+    .faq-section h2 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 30px;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .faq-item {
+      border-bottom: 1px solid #2a2a2a;
+      padding: 16px 0;
+    }
+    .faq-q {
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+    .faq-q::after { content: '+'; font-size: 20px; color: var(--ouro); flex-shrink: 0; }
+    .faq-a {
+      font-size: 14px;
+      color: var(--cinza-texto);
+      padding-top: 10px;
+      line-height: 1.5;
+      display: none;
+    }
+    .faq-item.open .faq-q::after { content: '−'; }
+    .faq-item.open .faq-a { display: block; }
+
+    /* ── FINAL CTA ── */
+    .final-cta {
+      padding: 52px 0;
+      text-align: center;
+      background: radial-gradient(ellipse at 50% 100%, #2a1f00, var(--preto));
+    }
+
+    .final-cta h2 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 36px;
+      line-height: 1.05;
+      margin-bottom: 12px;
+    }
+
+    .final-cta p { font-size: 15px; color: var(--cinza-texto); margin-bottom: 28px; }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: 24px 0;
+      text-align: center;
+      font-size: 11px;
+      color: #444;
+      border-top: 1px solid #1a1a1a;
+    }
+
+    /* ── FLOATING CTA ── */
+    .floating-cta {
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      background: var(--cinza-escuro);
+      border-top: 1px solid #333;
+      padding: 12px 20px;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .floating-price {
+      flex-shrink: 0;
+      text-align: left;
+    }
+    .floating-price .fp-old { font-size: 10px; color: var(--cinza-texto); text-decoration: line-through; }
+    .floating-price .fp-new { font-size: 20px; font-weight: 900; color: var(--ouro); line-height: 1; }
+
+    .floating-cta .btn {
+      flex: 1;
+      font-size: 14px;
+      padding: 14px 12px;
+    }
+
+    /* ── SPACING HELPERS ── */
+    .mt-8 { margin-top: 8px; }
+    .mt-16 { margin-top: 16px; }
+    .mt-24 { margin-top: 24px; }
+    .mb-32 { margin-bottom: 32px; }
+
+    /* BOTTOM PADDING for floating bar */
+    .page-content { padding-bottom: 80px; }
+
+    @media (min-width: 600px) {
+      .hero h1 { font-size: 48px; }
+      .container { max-width: 560px; }
+      .floating-cta { max-width: 480px; left: 50%; right: auto; transform: translateX(-50%); border-radius: 12px 12px 0 0; }
+    }
+  </style>
 </head>
-<body>
+<body class="page-content">
 
-<!-- TOPBAR -->
-<div class="topbar">⚡ Listas prontas — você escolhe o nicho e recebe hoje mesmo</div>
+  <!-- TOPBAR -->
+  <div class="topbar">⚡ Acesso imediato após o pagamento · Funciona no Canva (gratuito)</div>
 
-<!-- NAV -->
-<nav>
-  <div class="logo">MLX <span>Flow</span></div>
-  <a href="#planos" class="nav-cta">Ver planos</a>
-</nav>
-
-<!-- ══ HERO ══ -->
-<section id="hero">
-  <div class="hero-glow"></div>
-  <div class="wrap-sm">
-    <div class="hero-inner">
-      <div class="hero-badge"><span class="badge-dot"></span>Prospecção sem perder tempo</div>
-      <h1 class="display">PARE DE<br>GASTAR HORAS<br>BUSCANDO<br>CLIENTES</h1>
-      <p class="hero-sub">Lista pronta com empresas do nicho que você quer, com telefone disponível — comece a prospectar hoje mesmo.</p>
-      <div class="hero-cta-wrap">
-        <a href="#planos" class="btn btn-main">Quero minha lista agora →</a>
-        <span class="hero-proof">🔒 Pagamento seguro · Entrega rápida</span>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container">
+      <span class="tag">Pack Digital para Barbeiros</span>
+      <span class="hero-icon">✂️</span>
+      <h1>Pare de postar no escuro.<br><span>Lote sua agenda</span><br>essa semana.</h1>
+      <p>30 posts prontos para o Instagram. É só editar e postar. Sem enrolação, sem precisar saber design.</p>
+      <div class="hero-social-proof">
+        <span class="stars">★★★★★</span>
+        <span>+200 barbeiros já usando</span>
       </div>
-      <div class="urgency-bar">⚡ Preços promocionais por tempo limitado — podem subir a qualquer momento</div>
+      <a href="#comprar" class="btn">
+        QUERO LOTAR MINHA AGENDA
+        <span class="btn-sub">👇 Clique e garanta por R$25</span>
+      </a>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- STATS -->
-<div class="stats-bar">
-  <div class="wrap">
-    <div class="stats-row">
-      <div class="stat"><div class="stat-n">+1k</div><div class="stat-l">Listas entregues</div></div>
-      <div class="stat"><div class="stat-n">30+</div><div class="stat-l">Nichos disponíveis</div></div>
-      <div class="stat"><div class="stat-n">~80%</div><div class="stat-l">Menos tempo prospectando</div></div>
-    </div>
-  </div>
-</div>
-<div class="divider"></div>
-
-<!-- ══ DOR ══ -->
-<section id="dor">
-  <div class="wrap">
-    <div class="chip">O problema</div>
-    <h2>Você desperdiça tempo que poderia usar pra fechar</h2>
-    <div class="dor-list">
-      <div class="dor-item"><span class="dor-icon">⏳</span><div><h3>Horas perdidas pesquisando</h3><p>Você abre o Instagram, pesquisa empresa por empresa, anota número na mão. São horas todo dia que não voltam.</p></div></div>
-      <div class="dor-item"><span class="dor-icon">📉</span><div><h3>Sem escala na prospecção</h3><p>Fazer tudo manual limita seu volume. Você trava sua própria receita antes mesmo de começar a vender.</p></div></div>
-      <div class="dor-item"><span class="dor-icon">🗂️</span><div><h3>Leads bagunçados e perdidos</h3><p>Contatos espalhados em prints, bloco de notas, planilha suja. Você perde oportunidades sem nem perceber.</p></div></div>
-    </div>
-  </div>
-</section>
-<div class="divider"></div>
-
-<!-- ══ SOLUÇÃO ══ -->
-<section id="solucao">
-  <div class="wrap">
-    <div class="solucao-text">
-      <div class="chip">A solução</div>
-      <h2>Lista pronta. Nicho certo. Prospecta em minutos.</h2>
-      <p>Você escolhe o segmento. A gente entrega uma planilha organizada com nome da empresa, telefone e cidade — pronta pra usar no WhatsApp, ligação ou CRM.</p>
-      <p>Sem pesquisa. Sem bagunça. Só entrar em contato e vender.</p>
-    </div>
-    <div class="preview-card">
-      <div class="preview-header">Prévia da lista · Nicho: Clínicas Estéticas · SP</div>
-      <div class="preview-row head"><span>Empresa</span><span>Telefone</span><span>Cidade</span></div>
-      <div class="preview-row"><span>Studio Bella Skin</span><span class="tel">(11) 98×××-××××</span><span class="cidade">São Paulo</span></div>
-      <div class="preview-row"><span>Clínica Reviva</span><span class="tel">(11) 97×××-××××</span><span class="cidade">Guarulhos</span></div>
-      <div class="preview-row"><span>Espaço Nathalie</span><span class="tel">(11) 96×××-××××</span><span class="cidade">Campinas</span></div>
-      <div class="preview-row"><span>Beauty Med Clinic</span><span class="tel">(11) 98×××-××××</span><span class="cidade">Santo André</span></div>
-      <div class="preview-row"><span>Lumière Estética</span><span class="tel">(11) 97×××-××××</span><span class="cidade">Osasco</span></div>
-      <div class="preview-foot">📊 Formato .xlsx · Importa direto no CRM · Números ilustrativos</div>
-    </div>
-  </div>
-</section>
-<div class="divider"></div>
-
-<!-- ══ COMO FUNCIONA ══ -->
-<section id="como">
-  <div class="wrap">
-    <div class="chip">Como funciona</div>
-    <h2>3 passos para prospectar hoje</h2>
-    <div class="steps-list">
-      <div class="step"><div class="step-num">1</div><div><h3>Escolha o nicho</h3><p>Nos informe o segmento e região que você quer. Academias, clínicas, pet shops, advocacia — qualquer nicho.</p></div></div>
-      <div class="step"><div class="step-num">2</div><div><h3>Receba a lista</h3><p>Entregamos em planilha organizada com nome, telefone e cidade — pronta para uso imediato.</p></div></div>
-      <div class="step"><div class="step-num">3</div><div><h3>Comece a prospectar</h3><p>Dispare no WhatsApp, ligue ou importe no CRM. Você só se preocupa com vender.</p></div></div>
-    </div>
-  </div>
-</section>
-<div class="divider"></div>
-
-<!-- ══ BENEFÍCIOS ══ -->
-<section id="beneficios">
-  <div class="wrap">
-    <div class="chip">Por que funciona</div>
-    <h2>Feito pra quem precisa de resultado rápido</h2>
-    <div class="benefits-grid">
-      <div class="benefit"><span class="b-icon">⚡</span><div><h4>Economiza horas</h4><p>O que levaria dias, você recebe em minutos.</p></div></div>
-      <div class="benefit"><span class="b-icon">🎯</span><div><h4>Segmentado por nicho</h4><p>Fale só com quem precisa do que você vende.</p></div></div>
-      <div class="benefit"><span class="b-icon">📋</span><div><h4>Organizado e limpo</h4><p>Planilha pronta. Sem formatar, sem ajustar.</p></div></div>
-      <div class="benefit"><span class="b-icon">📱</span><div><h4>WhatsApp, ligação ou CRM</h4><p>Use do jeito que preferir, imediatamente.</p></div></div>
-      <div class="benefit"><span class="b-icon">📈</span><div><h4>Mais volume, mais vendas</h4><p>Mais contatos = mais oportunidades de fechar.</p></div></div>
-      <div class="benefit"><span class="b-icon">🏙️</span><div><h4>Filtro por cidade</h4><p>Prospecte na sua região com mais precisão.</p></div></div>
-    </div>
-  </div>
-</section>
-
-<!-- SOCIAL PROOF STRIP -->
-<div class="sp-strip">
-  <div class="wrap-sm">
-    <div class="sp-inner">
-      <div class="sp-avatars">
-        <div class="sp-av">LC</div><div class="sp-av">FO</div><div class="sp-av">RN</div><div class="sp-av">AM</div><div class="sp-av">JP</div>
-      </div>
-      <div class="sp-stars">★★★★★</div>
-      <p class="sp-text"><strong>+1.000 listas entregues</strong> para gestores, social medias e SDRs em todo o Brasil</p>
-    </div>
-  </div>
-</div>
-<div class="divider"></div>
-
-<!-- ══ DEPOIMENTOS ══ -->
-<section id="depoimentos">
-  <div class="wrap">
-    <div class="chip">Depoimentos</div>
-    <h2>Quem usou não volta pra prospecção manual</h2>
-    <div class="dep-list">
-      <div class="dep-card">
-        <div class="dep-q">"</div>
-        <div class="dep-stars">★★★★★</div>
-        <p class="dep-text">Comprei a lista de clínicas estéticas pra SP. Em dois dias já tinha fechado um cliente novo. Antes ficava 3 horas buscando contato no Instagram. Agora começo o dia prospectando de verdade.</p>
-        <div class="dep-author"><div class="dep-av">LC</div><div><div class="dep-name">Lucas C.</div><div class="dep-role">Gestor de Tráfego · SP</div></div></div>
-      </div>
-      <div class="dep-card">
-        <div class="dep-q">"</div>
-        <div class="dep-stars">★★★★★</div>
-        <p class="dep-text">Eu prospectava um cliente por semana, no máximo. Com a lista de academias, em uma semana enviei proposta pra 60 empresas. Mudou completamente o ritmo da minha agência.</p>
-        <div class="dep-author"><div class="dep-av">FO</div><div><div class="dep-name">Fernanda O.</div><div class="dep-role">Social Media Freelancer · MG</div></div></div>
-      </div>
-      <div class="dep-card">
-        <div class="dep-q">"</div>
-        <div class="dep-stars">★★★★★</div>
-        <p class="dep-text">Minha dificuldade era volume. Eu sabia vender, mas ficava travado na pesquisa. Com a lista, foco só em conversar e fechar. Já são 3 novos clientes no primeiro mês.</p>
-        <div class="dep-author"><div class="dep-av">RN</div><div><div class="dep-name">Rafael N.</div><div class="dep-role">SDR · Agência Digital · RJ</div></div></div>
-      </div>
-      <div class="dep-card">
-        <div class="dep-q">"</div>
-        <div class="dep-stars">★★★★★</div>
-        <p class="dep-text">Comprei pra testar, achei que ia ser mais do mesmo. Mas a lista veio limpa, com número real. Usei direto no WhatsApp. Indico pra qualquer um que precisa prospectar mais rápido.</p>
-        <div class="dep-author"><div class="dep-av">JP</div><div><div class="dep-name">Juliana P.</div><div class="dep-role">Freelancer · Design e Branding · BA</div></div></div>
-      </div>
-    </div>
-  </div>
-</section>
-<div class="divider"></div>
-
-<!-- ══ PARA QUEM ══ -->
-<section id="paraquem">
-  <div class="wrap">
-    <div class="chip">Para quem é</div>
-    <h2>Perfeito pra quem prospecta com escala</h2>
-    <div class="target-grid">
-      <div class="target"><span class="t-emoji">📣</span><h4>Gestor de Tráfego</h4><p>Prospecte novos clientes por nicho</p></div>
-      <div class="target"><span class="t-emoji">📲</span><h4>Social Media</h4><p>Encontre empresas que precisam de você</p></div>
-      <div class="target"><span class="t-emoji">💼</span><h4>SDR / Vendedor</h4><p>Aumente volume sem perder tempo</p></div>
-      <div class="target"><span class="t-emoji">🛠️</span><h4>Prestador de Serviço</h4><p>Prospecção constante sem esforço manual</p></div>
-      <div class="target"><span class="t-emoji">🏢</span><h4>Empresário</h4><p>Parceiros e clientes B2B organizados</p></div>
-      <div class="target"><span class="t-emoji">🚀</span><h4>Agência / Consultoria</h4><p>Monte pipelines completos por segmento</p></div>
-    </div>
-  </div>
-</section>
-<div class="divider"></div>
-
-<!-- ══ PLANOS ══ -->
-<section id="planos">
-  <div class="planos-glow"></div>
-  <div class="wrap" style="position:relative;z-index:1">
-    <div class="chip">Planos</div>
-    <h2>Escolha o volume certo pra você</h2>
-    <p style="color:var(--muted);font-size:15px;margin-bottom:20px">Sem mensalidade. Compra única. Começa hoje.</p>
-
-    <div class="scarcity-box">🔥 Preços de lançamento — podem subir a qualquer momento</div>
-
-    <div class="planos-list">
-
-      <!-- START -->
-      <div class="plan">
-        <div class="plan-top">
-          <div><div class="plan-name">Start</div><div style="font-size:12px;color:var(--muted);margin-top:2px">Ideal pra começar</div></div>
-          <div><div class="plan-num">250</div><div class="plan-clabel">contatos</div></div>
+  <!-- PHONE MOCKUP -->
+  <section class="mockup-section">
+    <div class="container">
+      <div class="phone-mockup" style="margin:0 auto; display:block; text-align:center;">
+        <div class="phone-frame">
+          <div class="phone-screen">
+            <div class="ig-header">
+              <div class="ig-avatar">✂️</div>
+              <div>
+                <div class="ig-name">@barbearia_silva</div>
+                <div class="ig-followers">1.240 seguidores</div>
+              </div>
+              <div style="margin-left:auto; font-size:9px; background:var(--ouro); color:var(--preto); padding:3px 8px; border-radius:3px; font-weight:800;">SEGUIR</div>
+            </div>
+            <div class="ig-post ig-post-1">
+              <span style="position:relative;">✂️</span>
+              <span class="ig-post-label">POST PRONTO</span>
+            </div>
+            <div class="ig-stats">
+              <span class="ig-stat-high">❤️ 312</span>
+              <span>💬 47 comentários</span>
+            </div>
+            <div class="ig-post ig-post-2">
+              <span>📅</span>
+              <span class="ig-post-label">PROMOÇÃO</span>
+            </div>
+            <div class="ig-stats">
+              <span class="ig-stat-high">📩 89 no direct</span>
+            </div>
+          </div>
         </div>
-        <div class="plan-price-row">
-          <span class="plan-de">por apenas</span>
-          <span class="plan-por"><sup>R$</sup>19<sup style="font-size:17px">,90</sup></span>
-        </div>
-        <ul class="plan-features">
-          <li>250 contatos segmentados</li>
-          <li>Nome + telefone + cidade</li>
-          <li>Planilha .xlsx pronta pra usar</li>
-          <li>1 nicho de escolha</li>
-          <li>Entrega rápida</li>
-        </ul>
-        <a href="https://pay.kiwify.com.br/fSq2eAO" target="_blank" class="btn btn-ghost">Comprar Start — R$19,90</a>
-        <div class="plan-guarantee">Pagamento seguro via Kiwify</div>
+        <div class="notification-bubble">🔔 89 novos clientes!</div>
       </div>
-
-      <!-- PRO -->
-      <div class="plan destaque">
-        <div class="plan-badge">⭐ Mais escolhido</div>
-        <div class="plan-top">
-          <div><div class="plan-name">Pro</div><div style="font-size:12px;color:var(--muted);margin-top:2px">Melhor custo-benefício</div></div>
-          <div><div class="plan-num">500</div><div class="plan-clabel">contatos</div></div>
-        </div>
-        <div class="plan-price-row">
-          <span class="plan-de">por apenas</span>
-          <span class="plan-por"><sup>R$</sup>29<sup style="font-size:17px">,90</sup></span>
-        </div>
-        <ul class="plan-features">
-          <li>500 contatos segmentados</li>
-          <li>Nome + telefone + cidade</li>
-          <li>Planilha .xlsx pronta pra usar</li>
-          <li>1 nicho de escolha</li>
-          <li>Entrega rápida</li>
-        </ul>
-        <a href="https://pay.kiwify.com.br/PNPJLkA" target="_blank" class="btn btn-plan">Comprar Pro — R$29,90</a>
-        <div class="plan-guarantee">Pagamento seguro via Kiwify</div>
-      </div>
-
-      <!-- SCALE -->
-      <div class="plan">
-        <div class="plan-top">
-          <div><div class="plan-name">Scale</div><div style="font-size:12px;color:var(--muted);margin-top:2px">Para quem quer volume</div></div>
-          <div><div class="plan-num">1000</div><div class="plan-clabel">contatos</div></div>
-        </div>
-        <div class="plan-price-row">
-          <span class="plan-de">por apenas</span>
-          <span class="plan-por"><sup>R$</sup>49<sup style="font-size:17px">,90</sup></span>
-        </div>
-        <ul class="plan-features">
-          <li>1.000 contatos segmentados</li>
-          <li>Nome + telefone + cidade</li>
-          <li>Planilha .xlsx pronta pra usar</li>
-          <li>1 nicho de escolha</li>
-          <li>Entrega rápida</li>
-        </ul>
-        <a href="https://pay.kiwify.com.br/JdXF7r9" target="_blank" class="btn btn-ghost">Comprar Scale — R$49,90</a>
-        <div class="plan-guarantee">Pagamento seguro via Kiwify</div>
-      </div>
-
+      <p style="text-align:center; font-size:13px; color:var(--cinza-texto); margin-top:20px;">É isso que acontece quando você usa posts profissionais 👆</p>
     </div>
+  </section>
 
-    <div class="transp-box">
-      <span style="font-size:18px;flex-shrink:0">ℹ️</span>
-      <p><strong>Transparência:</strong> Os contatos são obtidos de informações públicas disponíveis em perfis comerciais no Instagram. Nenhum dado privado é coletado. <strong>O uso da lista é de responsabilidade do comprador.</strong></p>
+  <!-- DOR -->
+  <section class="pain-section">
+    <div class="container">
+      <span class="tag">Isso é com você?</span>
+      <h2>Quantas vezes você passou por isso?</h2>
+      <ul class="pain-list">
+        <li>
+          <div class="pain-icon">😶</div>
+          <span>Você abre o Instagram e trava — <strong style="color:var(--branco);">não sabe o que postar</strong></span>
+        </li>
+        <li>
+          <div class="pain-icon">📉</div>
+          <span>Você posta uma foto qualquer e <strong style="color:var(--branco);">ninguém curte, ninguém chama</strong></span>
+        </li>
+        <li>
+          <div class="pain-icon">🪑</div>
+          <span>A cadeira fica vazia em dia de semana. <strong style="color:var(--branco);">A agenda não enche</strong></span>
+        </li>
+        <li>
+          <div class="pain-icon">😩</div>
+          <span>Você vê outro barbeiro lotado e pensa: <strong style="color:var(--branco);">"Por que não funciona pra mim?"</strong></span>
+        </li>
+        <li>
+          <div class="pain-icon">💸</div>
+          <span>No fim da semana o dinheiro não fecha. <strong style="color:var(--branco);">Podia ter atendido muito mais</strong></span>
+        </li>
+      </ul>
+      <div class="pain-highlight">
+        ❌ O problema não é você. É que você nunca teve as ferramentas certas.
+      </div>
     </div>
+  </section>
+
+  <!-- SOLUÇÃO -->
+  <section class="solution-section">
+    <div class="container">
+      <span class="tag">A solução</span>
+      <h2>Apresentando o<br><span style="color:var(--ouro);">Agenda Cheia Barber</span></h2>
+      <p>Um pack completo de conteúdo pronto para você postar hoje mesmo e começar a atrair clientes pelo Instagram.</p>
+      <p style="font-size:16px; font-weight:700; color:var(--branco);">Sem precisar saber design.<br>Sem precisar criar do zero.<br>É só editar e postar. ✅</p>
+      <div class="mt-24">
+        <a href="#comprar" class="btn">
+          QUERO MAIS CLIENTES
+          <span class="btn-sub">Acesso imediato · R$25 só hoje</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- O QUE INCLUI -->
+  <section class="includes-section">
+    <div class="container">
+      <span class="tag">O que você recebe</span>
+      <h2>Tudo o que vem no pack:</h2>
+
+      <div class="include-card">
+        <div class="include-emoji">🖼️</div>
+        <div class="include-text">
+          <h3>30 Posts Prontos para o Instagram</h3>
+          <p>Editáveis no Canva (gratuito). Templates profissionais com identidade visual de barbearia. Só trocar o nome e postar.</p>
+        </div>
+      </div>
+
+      <div class="include-card">
+        <div class="include-emoji">✍️</div>
+        <div class="include-text">
+          <h3>30 Legendas Prontas</h3>
+          <p>Uma legenda para cada post. Com hashtags incluídas. Copia, cola e publica. Simples assim.</p>
+        </div>
+      </div>
+
+      <div class="include-card">
+        <div class="include-emoji">📲</div>
+        <div class="include-text">
+          <h3>10 Ideias de Stories</h3>
+          <p>Stories que geram interação e fazem o cliente te mandar mensagem. Com roteiros prontos.</p>
+        </div>
+      </div>
+
+      <div class="include-card">
+        <div class="include-emoji">🎁</div>
+        <div class="include-text">
+          <h3>3 Modelos de Promoções</h3>
+          <p>Promoções que atraem cliente novo e fidelizam quem já veio. Copie o modelo e coloque o seu preço.</p>
+        </div>
+      </div>
+
+      <div class="mt-24">
+        <a href="#comprar" class="btn">
+          LIBERAR MEU ACESSO AGORA
+          <span class="btn-sub">Por apenas R$25 · Acesso imediato</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- BARBER VISUAL -->
+  <section class="barber-visual">
+    <div class="container">
+      <span class="tag">O resultado</span>
+      <div class="barber-scene">
+        <div class="barber-emoji-group">
+          <span>✂️</span>
+          <span>💈</span>
+          <span>📱</span>
+          <span>💰</span>
+        </div>
+        <h3>AGENDA LOTADA A SEMANA TODA</h3>
+        <p>É isso que acontece quando você usa o pack certo</p>
+        <div class="calendar-grid">
+          <div class="cal-day cal-empty">S</div>
+          <div class="cal-day cal-empty">T</div>
+          <div class="cal-day cal-empty">Q</div>
+          <div class="cal-day cal-empty">Q</div>
+          <div class="cal-day cal-empty">S</div>
+          <div class="cal-day cal-empty">S</div>
+          <div class="cal-day cal-empty">D</div>
+          <div class="cal-day cal-partial">1</div>
+          <div class="cal-day cal-full">2</div>
+          <div class="cal-day cal-full">3</div>
+          <div class="cal-day cal-full">4</div>
+          <div class="cal-day cal-full">5</div>
+          <div class="cal-day cal-full">6</div>
+          <div class="cal-day cal-empty">7</div>
+          <div class="cal-day cal-full">8</div>
+          <div class="cal-day cal-full">9</div>
+          <div class="cal-day cal-full">10</div>
+          <div class="cal-day cal-full">11</div>
+          <div class="cal-day cal-full">12</div>
+          <div class="cal-day cal-full">13</div>
+          <div class="cal-day cal-empty">14</div>
+          <div class="cal-day cal-full">15</div>
+          <div class="cal-day cal-full">16</div>
+          <div class="cal-day cal-full">17</div>
+          <div class="cal-day cal-full">18</div>
+          <div class="cal-day cal-full">19</div>
+          <div class="cal-day cal-full">20</div>
+          <div class="cal-day cal-empty">21</div>
+        </div>
+        <p style="margin-top:12px; font-size:11px; color:var(--ouro);">🟡 = DIA CHEIO DE CLIENTES</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- BENEFÍCIOS -->
+  <section class="benefits-section">
+    <div class="container">
+      <span class="tag">Por que funciona</span>
+      <h2>O que você vai ganhar de verdade</h2>
+
+      <div class="benefit-item">
+        <div class="benefit-number">1</div>
+        <div class="benefit-text">
+          <h3>Mais clientes no direct</h3>
+          <p>Posts prontos que geram curiosidade e fazem o cliente mandar mensagem pedindo horário.</p>
+        </div>
+      </div>
+
+      <div class="benefit-item">
+        <div class="benefit-number">2</div>
+        <div class="benefit-text">
+          <h3>Agenda sem espaço vazio</h3>
+          <p>Com as promoções certas na hora certa, você preenche os horários que estavam parados.</p>
+        </div>
+      </div>
+
+      <div class="benefit-item">
+        <div class="benefit-number">3</div>
+        <div class="benefit-text">
+          <h3>Perfil mais profissional</h3>
+          <p>Seu Instagram começa a parecer o de quem é sério no que faz. Clientes novos confiam mais.</p>
+        </div>
+      </div>
+
+      <div class="benefit-item">
+        <div class="benefit-number">4</div>
+        <div class="benefit-text">
+          <h3>Mais dinheiro no fim da semana</h3>
+          <p>Mais clientes = mais cortes = mais dinheiro. Simples assim.</p>
+        </div>
+      </div>
+
+      <div class="benefit-item">
+        <div class="benefit-number">5</div>
+        <div class="benefit-text">
+          <h3>Menos estresse com conteúdo</h3>
+          <p>Você para de gastar energia pensando no que postar. Já tá tudo pronto pra você.</p>
+        </div>
+      </div>
+
+      <div class="mt-24">
+        <a href="#comprar" class="btn">
+          QUERO ISSO AGORA
+          <span class="btn-sub">Garantir por R$25 antes que suba</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- OBJEÇÕES -->
+  <section class="objections-section">
+    <div class="container">
+      <span class="tag">Sem desculpa</span>
+      <h2>"Mas e se eu..."</h2>
+
+      <div class="obj-card">
+        <div class="obj-check">✅</div>
+        <div class="obj-text">
+          <strong>"Não sei mexer no design"</strong>
+          <span>Não precisa. Tudo funciona no Canva gratuito. Você só troca o nome da barbearia. Leva 2 minutos.</span>
+        </div>
+      </div>
+
+      <div class="obj-card">
+        <div class="obj-check">✅</div>
+        <div class="obj-text">
+          <strong>"Estou começando do zero"</strong>
+          <span>Perfeito. Esse pack foi feito pra quem tá começando. Não precisa de experiência nenhuma.</span>
+        </div>
+      </div>
+
+      <div class="obj-card">
+        <div class="obj-check">✅</div>
+        <div class="obj-text">
+          <strong>"Meu Instagram tem poucos seguidores"</strong>
+          <span>Seguidores não pagam conta. Clientes sim. Com esses posts você atrai quem quer marcar horário.</span>
+        </div>
+      </div>
+
+      <div class="obj-card">
+        <div class="obj-check">✅</div>
+        <div class="obj-text">
+          <strong>"Não tenho tempo pra ficar postando"</strong>
+          <span>São 2 minutos por post. Com 30 posts você tem conteúdo pra mais de 1 mês sem pensar em nada.</span>
+        </div>
+      </div>
+
+      <div class="obj-card">
+        <div class="obj-check">✅</div>
+        <div class="obj-text">
+          <strong>"E se não funcionar pra mim?"</strong>
+          <span>Você tem 7 dias de garantia. Se não curtir por qualquer motivo, devolvemos o dinheiro. Risco zero.</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- OFERTA -->
+  <section class="offer-section" id="comprar">
+    <div class="container">
+      <span class="tag">🔥 Oferta limitada</span>
+      <h2>Garanta seu acesso agora</h2>
+
+      <div class="urgency-bar">
+        <div class="urgency-dot"></div>
+        <span><strong>Preço promocional por tempo limitado.</strong> Pode subir a qualquer momento.</span>
+      </div>
+
+      <div class="price-box">
+        <div class="price-badge">⚡ OFERTA ESPECIAL DE LANÇAMENTO</div>
+        <p class="price-old">De R$ 97,00</p>
+        <div class="price-new">R$<span class="price-cents">25</span></div>
+        <p class="price-desc">pagamento único · sem mensalidade · acesso para sempre</p>
+      </div>
+
+      <p style="font-size:14px; color:var(--cinza-texto); margin-bottom:20px;">
+        ✅ 30 posts prontos<br>
+        ✅ 30 legendas com hashtags<br>
+        ✅ 10 ideias de stories<br>
+        ✅ 3 modelos de promoção<br>
+        ✅ Acesso imediato no Canva<br>
+        ✅ Garantia de 7 dias
+      </p>
+
+      <a href="#" class="btn" style="font-size:18px; padding:20px;">
+        🔥 QUERO LOTAR MINHA AGENDA
+        <span class="btn-sub">Clique e garanta por R$25 agora</span>
+      </a>
+
+      <p style="font-size:11px; color:#555; margin-top:12px;">🔒 Pagamento seguro · Acesso imediato · Cancele quando quiser</p>
+    </div>
+  </section>
+
+  <!-- GARANTIA -->
+  <section class="guarantee-section">
+    <div class="container">
+      <div class="guarantee-box">
+        <span class="guarantee-icon">🛡️</span>
+        <h3>Garantia Total de 7 Dias</h3>
+        <p>Se por qualquer motivo você não ficar satisfeito, é só me chamar em até 7 dias e eu devolvo <strong style="color:var(--branco);">100% do seu dinheiro</strong>.<br><br>Sem perguntas. Sem burocracia. Risco zero pra você.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="faq-section">
+    <div class="container">
+      <h2>Perguntas Frequentes</h2>
+
+      <div class="faq-item">
+        <div class="faq-q">Como vou receber o pack?</div>
+        <div class="faq-a">Assim que o pagamento for confirmado, você recebe o acesso imediatamente por e-mail. Tudo no Canva, pronto pra editar.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">Precisa saber mexer no Canva?</div>
+        <div class="faq-a">Não. O Canva é gratuito e superintuitivo. Você só vai trocar o nome da barbearia e o logo (opcional). Leva menos de 2 minutos por post.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">Funciona pra qualquer barbearia?</div>
+        <div class="faq-a">Sim! Funciona pra barbearia pequena, grande, individual, em casa ou em loja. O conteúdo foi feito pra atrair qualquer tipo de cliente de barbearia.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">Por quanto tempo posso usar?</div>
+        <div class="faq-a">Para sempre. É um pagamento único. Você tem acesso vitalício e pode usar quantas vezes quiser.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">E se eu não gostar?</div>
+        <div class="faq-a">Você tem 7 dias de garantia completa. Se não curtir, devolvemos 100% do valor sem nenhuma pergunta.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FINAL CTA -->
+  <section class="final-cta">
+    <div class="container">
+      <h2>Sua agenda cheia<br>começa <span style="color:var(--ouro);">hoje.</span></h2>
+      <p>Para de deixar dinheiro na mesa. Cada dia sem postar é um cliente que foi pra outra barbearia.</p>
+      <a href="#comprar" class="btn" style="font-size:18px; padding:20px;">
+        ✂️ QUERO LOTAR MINHA AGENDA
+        <span class="btn-sub">Por apenas R$25 · Acesso imediato</span>
+      </a>
+      <p style="font-size:12px; color:#444; margin-top:16px;">🔒 Compra segura · 7 dias de garantia · Sem mensalidade</p>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      <p>© 2025 Agenda Cheia Barber · Todos os direitos reservados</p>
+      <p style="margin-top:4px;">Dúvidas? Fale no WhatsApp.</p>
+    </div>
+  </footer>
+
+  <!-- FLOATING CTA BAR -->
+  <div class="floating-cta">
+    <div class="floating-price">
+      <div class="fp-old">R$ 97</div>
+      <div class="fp-new">R$25</div>
+    </div>
+    <a href="#comprar" class="btn">
+      🔥 GARANTIR AGORA
+    </a>
   </div>
-</section>
-<div class="divider"></div>
 
-<!-- ══ CTA FINAL ══ -->
-<section id="cta-final">
-  <div class="cta-glow"></div>
-  <div class="wrap-sm">
-    <div class="chip" style="display:inline-flex">Última chamada</div>
-    <h2>Sua próxima lista de clientes está a um clique.</h2>
-    <p>Mais de mil listas entregues. Prospecção mais rápida e eficiente. Por menos do que um almoço.</p>
-    <div style="display:flex;flex-direction:column;align-items:center;gap:10px">
-      <a href="#planos" class="btn btn-main">Quero minha lista agora →</a>
-      <span class="cta-hint">A partir de <strong>R$19,90</strong> · Entrega rápida · Suporte via WhatsApp</span>
-    </div>
-  </div>
-</section>
+  <script>
+    // FAQ toggle
+    document.querySelectorAll('.faq-item').forEach(item => {
+      item.querySelector('.faq-q').addEventListener('click', () => {
+        item.classList.toggle('open');
+      });
+    });
 
-<!-- FOOTER -->
-<footer>
-  <div class="footer-logo">MLX Flow</div>
-  <p>Prospecção inteligente para quem quer crescer.</p>
-  <p>© 2026 MLX Flow — By MLX Mind - Marketing Experience · Ribeirão Preto, SP</p>
-</footer>
+    // Hide floating bar when near the main CTA section
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        document.querySelector('.floating-cta').style.display =
+          entry.isIntersecting ? 'none' : 'flex';
+      });
+    }, { threshold: 0.5 });
 
-<!-- STICKY MOBILE -->
-<div class="sticky-cta">
-  <a href="#planos" class="btn btn-main">Ver planos — a partir de R$19,90 →</a>
-</div>
-
-<!-- ══ WHATSAPP FLOATING BUTTON ══ -->
-<!--
-  INSTRUÇÕES: Troque o número abaixo pelo seu.
-  Formato: código do país + DDD + número, sem espaços ou símbolos.
-  Exemplo para (16) 99999-9999 → 5516999999999
-  Você também pode personalizar o texto da mensagem no parâmetro "text=".
--->
-<a
-  class="whatsapp-float"
-  href="https://wa.me/5516936180851?text=Ol%C3%A1!%20Tenho%20interesse%20nas%20listas%20da%20MLX%20Flow."
-  target="_blank"
-  rel="noopener noreferrer"
-  aria-label="Fale conosco pelo WhatsApp"
->
-  <span class="wpp-label">Fale conosco</span>
-  <span class="wpp-btn">
-    <!-- Ícone oficial do WhatsApp -->
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
-      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-    </svg>
-  </span>
-</a>
-
+    const offerSection = document.getElementById('comprar');
+    if (offerSection) observer.observe(offerSection);
+  </script>
 </body>
 </html>
