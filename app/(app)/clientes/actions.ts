@@ -21,7 +21,7 @@ function fieldsFromDados(formData: FormData) {
 
 export async function createCliente(formData: FormData) {
   const supabase = await createClient();
-  const me = await getCurrentUser(supabase);
+  const me = await getCurrentUser();
   if (!canManageClients(me.role)) {
     redirect('/clientes?error=' + encodeURIComponent('Sem permissão.'));
   }
@@ -62,7 +62,7 @@ export async function createCliente(formData: FormData) {
 
 export async function updateClienteDados(clientId: string, formData: FormData) {
   const supabase = await createClient();
-  const me = await getCurrentUser(supabase);
+  const me = await getCurrentUser();
   if (!canManageClients(me.role)) {
     redirect(`/clientes/${clientId}?error=` + encodeURIComponent('Sem permissão.'));
   }
@@ -84,7 +84,7 @@ export async function updateClienteDados(clientId: string, formData: FormData) {
 
 export async function addClientService(clientId: string, formData: FormData) {
   const supabase = await createClient();
-  const me = await getCurrentUser(supabase);
+  const me = await getCurrentUser();
   if (!canManageClients(me.role)) {
     redirect(`/clientes/${clientId}?error=` + encodeURIComponent('Sem permissão.'));
   }
@@ -117,7 +117,7 @@ export async function toggleClientService(
   _formData: FormData
 ) {
   const supabase = await createClient();
-  const me = await getCurrentUser(supabase);
+  const me = await getCurrentUser();
   if (!canManageClients(me.role)) {
     redirect(`/clientes/${clientId}?error=` + encodeURIComponent('Sem permissão.'));
   }
@@ -141,7 +141,7 @@ export async function removeClientService(
   _formData: FormData
 ) {
   const supabase = await createClient();
-  const me = await getCurrentUser(supabase);
+  const me = await getCurrentUser();
   if (!canManageClients(me.role)) {
     redirect(`/clientes/${clientId}?error=` + encodeURIComponent('Sem permissão.'));
   }
@@ -158,7 +158,7 @@ export async function removeClientService(
 
 export async function upsertContract(clientId: string, formData: FormData) {
   const supabase = await createClient();
-  const me = await getCurrentUser(supabase);
+  const me = await getCurrentUser();
   if (!canManageClients(me.role)) {
     redirect(`/clientes/${clientId}?error=` + encodeURIComponent('Sem permissão.'));
   }
@@ -202,7 +202,7 @@ export async function upsertContract(clientId: string, formData: FormData) {
 
 export async function addClientMetric(clientId: string, formData: FormData) {
   const supabase = await createClient();
-  const me = await getCurrentUser(supabase);
+  const me = await getCurrentUser();
   if (isReadOnly(me.role)) {
     redirect(`/clientes/${clientId}?error=` + encodeURIComponent('Sem permissão.'));
   }
@@ -226,7 +226,7 @@ export async function addClientMetric(clientId: string, formData: FormData) {
 
 export async function addClientNote(clientId: string, formData: FormData) {
   const supabase = await createClient();
-  const me = await getCurrentUser(supabase);
+  const me = await getCurrentUser();
   if (isReadOnly(me.role)) {
     redirect(`/clientes/${clientId}?error=` + encodeURIComponent('Sem permissão.'));
   }
@@ -251,7 +251,7 @@ export async function addClientNote(clientId: string, formData: FormData) {
 
 export async function uploadClientFile(clientId: string, formData: FormData) {
   const supabase = await createClient();
-  const me = await getCurrentUser(supabase);
+  const me = await getCurrentUser();
   if (isReadOnly(me.role)) {
     redirect(`/clientes/${clientId}?error=` + encodeURIComponent('Sem permissão.'));
   }
@@ -288,7 +288,7 @@ export async function toggleOnboardingItem(
   _formData: FormData
 ) {
   const supabase = await createClient();
-  const me = await getCurrentUser(supabase);
+  const me = await getCurrentUser();
   if (isReadOnly(me.role)) {
     redirect(`/clientes/${clientId}?error=` + encodeURIComponent('Sem permissão.'));
   }

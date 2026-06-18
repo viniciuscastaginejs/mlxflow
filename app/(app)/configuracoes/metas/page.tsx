@@ -17,7 +17,7 @@ export default async function MetasPage({
   searchParams: Promise<{ ano?: string; mes?: string }>;
 }) {
   const supabase = await createClient();
-  const me = await getCurrentUser(supabase);
+  const me = await getCurrentUser();
   if (!canManageFinanceiro(me.role)) {
     redirect('/dashboard');
   }

@@ -8,7 +8,7 @@ import { getCurrentUser, canManageUsers, type Role } from '@/lib/auth/role';
 
 export async function inviteTeamMember(formData: FormData) {
   const supabase = await createClient();
-  const me = await getCurrentUser(supabase);
+  const me = await getCurrentUser();
   if (!canManageUsers(me.role)) {
     redirect('/configuracoes/usuarios?error=' + encodeURIComponent('Sem permissão.'));
   }
@@ -41,7 +41,7 @@ export async function inviteTeamMember(formData: FormData) {
 
 export async function updateUserRole(userId: string, role: Role, _formData: FormData) {
   const supabase = await createClient();
-  const me = await getCurrentUser(supabase);
+  const me = await getCurrentUser();
   if (!canManageUsers(me.role)) {
     redirect('/configuracoes/usuarios?error=' + encodeURIComponent('Sem permissão.'));
   }
@@ -57,7 +57,7 @@ export async function updateUserRole(userId: string, role: Role, _formData: Form
 
 export async function toggleUserActive(userId: string, nextActive: boolean, _formData: FormData) {
   const supabase = await createClient();
-  const me = await getCurrentUser(supabase);
+  const me = await getCurrentUser();
   if (!canManageUsers(me.role)) {
     redirect('/configuracoes/usuarios?error=' + encodeURIComponent('Sem permissão.'));
   }

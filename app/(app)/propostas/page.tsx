@@ -24,7 +24,7 @@ export default async function PropostasPage({
   searchParams: Promise<{ modal?: string }>;
 }) {
   const supabase = await createClient();
-  const me = await getCurrentUser(supabase);
+  const me = await getCurrentUser();
   if (!canManageFinanceiro(me.role)) {
     redirect('/dashboard');
   }

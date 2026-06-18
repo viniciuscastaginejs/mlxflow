@@ -18,7 +18,7 @@ export type DealInput = {
 
 export async function createDeal(input: DealInput): Promise<ActionResult & { id?: string }> {
   const supabase = await createClient();
-  const me = await getCurrentUser(supabase);
+  const me = await getCurrentUser();
   if (isReadOnly(me.role)) return { ok: false, error: 'Sem permissão.' };
   if (!input.companyName.trim()) return { ok: false, error: 'Empresa é obrigatória.' };
 
@@ -44,7 +44,7 @@ export async function createDeal(input: DealInput): Promise<ActionResult & { id?
 
 export async function updateDeal(dealId: string, input: DealInput): Promise<ActionResult> {
   const supabase = await createClient();
-  const me = await getCurrentUser(supabase);
+  const me = await getCurrentUser();
   if (isReadOnly(me.role)) return { ok: false, error: 'Sem permissão.' };
   if (!input.companyName.trim()) return { ok: false, error: 'Empresa é obrigatória.' };
 
@@ -74,7 +74,7 @@ export async function updateDealStage(
   lossReason?: string
 ): Promise<ActionResult> {
   const supabase = await createClient();
-  const me = await getCurrentUser(supabase);
+  const me = await getCurrentUser();
   if (isReadOnly(me.role)) return { ok: false, error: 'Sem permissão.' };
 
   const payload: Record<string, any> = { stage };
@@ -100,7 +100,7 @@ export async function updateDealStage(
 
 export async function deleteDeal(dealId: string): Promise<ActionResult> {
   const supabase = await createClient();
-  const me = await getCurrentUser(supabase);
+  const me = await getCurrentUser();
   if (isReadOnly(me.role)) return { ok: false, error: 'Sem permissão.' };
 
   await supabase.from('pipeline_followups').delete().eq('deal_id', dealId);
@@ -116,7 +116,7 @@ export async function addFollowup(
   content: string
 ): Promise<ActionResult & { id?: string }> {
   const supabase = await createClient();
-  const me = await getCurrentUser(supabase);
+  const me = await getCurrentUser();
   if (isReadOnly(me.role)) return { ok: false, error: 'Sem permissão.' };
   if (!content.trim()) return { ok: false, error: 'Follow-up vazio.' };
 

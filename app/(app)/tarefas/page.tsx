@@ -13,7 +13,7 @@ export default async function TarefasPage({
 }) {
   const { responsavel, cliente } = await searchParams;
   const supabase = await createClient();
-  const me = await getCurrentUser(supabase);
+  const me = await getCurrentUser();
   const isColaborador = me.role === 'colaborador';
 
   const [tasks, clientes, responsaveis] = await Promise.all([

@@ -23,7 +23,7 @@ export default async function UsuariosPage({
   searchParams: Promise<{ modal?: string }>;
 }) {
   const supabase = await createClient();
-  const me = await getCurrentUser(supabase);
+  const me = await getCurrentUser();
   if (!canManageUsers(me.role)) {
     redirect('/dashboard');
   }

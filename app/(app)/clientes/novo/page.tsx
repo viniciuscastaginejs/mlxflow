@@ -7,7 +7,7 @@ import Notify from '../../_notify';
 
 export default async function NovoClientePage() {
   const supabase = await createClient();
-  const me = await getCurrentUser(supabase);
+  const me = await getCurrentUser();
   if (!canManageClients(me.role)) {
     redirect('/clientes');
   }

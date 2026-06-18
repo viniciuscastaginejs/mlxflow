@@ -13,7 +13,7 @@ function redirectBack(clientId: string, params: Record<string, string>) {
 
 export async function createPost(clientId: string, formData: FormData) {
   const supabase = await createClient();
-  const me = await getCurrentUser(supabase);
+  const me = await getCurrentUser();
   if (isReadOnly(me.role)) redirectBack(clientId, { error: 'Sem permissão.' });
 
   const scheduledDate = String(formData.get('scheduled_date') ?? '');
@@ -47,7 +47,7 @@ export async function createPost(clientId: string, formData: FormData) {
 
 export async function updatePost(clientId: string, postId: string, formData: FormData) {
   const supabase = await createClient();
-  const me = await getCurrentUser(supabase);
+  const me = await getCurrentUser();
   if (isReadOnly(me.role)) redirectBack(clientId, { error: 'Sem permissão.' });
 
   const scheduledDate = String(formData.get('scheduled_date') ?? '');
@@ -80,7 +80,7 @@ export async function updatePost(clientId: string, postId: string, formData: For
 
 export async function deletePost(clientId: string, postId: string, formData: FormData) {
   const supabase = await createClient();
-  const me = await getCurrentUser(supabase);
+  const me = await getCurrentUser();
   if (isReadOnly(me.role)) redirectBack(clientId, { error: 'Sem permissão.' });
 
   const { error } = await supabase.from('editorial_posts').delete().eq('id', postId);

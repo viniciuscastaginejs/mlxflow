@@ -6,7 +6,7 @@ import { getCurrentUser } from '@/lib/auth/role';
 
 export async function markNotificationRead(notificationId: string) {
   const supabase = await createClient();
-  const me = await getCurrentUser(supabase);
+  const me = await getCurrentUser();
 
   await supabase
     .from('notifications')
@@ -19,7 +19,7 @@ export async function markNotificationRead(notificationId: string) {
 
 export async function markAllNotificationsRead() {
   const supabase = await createClient();
-  const me = await getCurrentUser(supabase);
+  const me = await getCurrentUser();
 
   await supabase.from('notifications').update({ read: true }).eq('user_id', me.id).eq('read', false);
 

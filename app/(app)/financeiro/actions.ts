@@ -14,7 +14,7 @@ export async function createRevenue(
   input: { clientId: string | null; description: string | null; type: RevenueType; month: number | null }
 ): Promise<ActionResult & { id?: string }> {
   const supabase = await createClient();
-  const me = await getCurrentUser(supabase);
+  const me = await getCurrentUser();
   if (!canManageFinanceiro(me.role)) return { ok: false, error: 'Sem permissão.' };
   if (!input.clientId && !input.description?.trim()) {
     return { ok: false, error: 'Escolha um cliente ou descreva a receita avulsa.' };
@@ -61,7 +61,7 @@ export async function createExpense(
   input: { description: string; category: ExpenseCategory }
 ): Promise<ActionResult & { id?: string }> {
   const supabase = await createClient();
-  const me = await getCurrentUser(supabase);
+  const me = await getCurrentUser();
   if (!canManageFinanceiro(me.role)) return { ok: false, error: 'Sem permissão.' };
   if (!input.description.trim()) return { ok: false, error: 'Descrição é obrigatória.' };
 
@@ -95,7 +95,7 @@ export async function createPartnerPayment(
   input: { partnerName: string; type: PartnerType; quantity: number }
 ): Promise<ActionResult & { id?: string }> {
   const supabase = await createClient();
-  const me = await getCurrentUser(supabase);
+  const me = await getCurrentUser();
   if (!canManageFinanceiro(me.role)) return { ok: false, error: 'Sem permissão.' };
   if (!input.partnerName.trim()) return { ok: false, error: 'Nome é obrigatório.' };
 
@@ -135,7 +135,7 @@ export async function updateRevenueInstallment(
   status: InstallmentStatus
 ): Promise<ActionResult> {
   const supabase = await createClient();
-  const me = await getCurrentUser(supabase);
+  const me = await getCurrentUser();
   if (!canManageFinanceiro(me.role)) return { ok: false, error: 'Sem permissão.' };
 
   const { data, error } = await supabase
@@ -160,7 +160,7 @@ export async function updateExpenseInstallment(
   amount: number
 ): Promise<ActionResult> {
   const supabase = await createClient();
-  const me = await getCurrentUser(supabase);
+  const me = await getCurrentUser();
   if (!canManageFinanceiro(me.role)) return { ok: false, error: 'Sem permissão.' };
 
   const { data, error } = await supabase
@@ -181,7 +181,7 @@ export async function updatePartnerInstallment(
   amount: number
 ): Promise<ActionResult> {
   const supabase = await createClient();
-  const me = await getCurrentUser(supabase);
+  const me = await getCurrentUser();
   if (!canManageFinanceiro(me.role)) return { ok: false, error: 'Sem permissão.' };
 
   const { data, error } = await supabase

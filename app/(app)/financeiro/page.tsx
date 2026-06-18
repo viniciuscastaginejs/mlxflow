@@ -14,7 +14,7 @@ export default async function FinanceiroPage({
   searchParams: Promise<{ ano?: string }>;
 }) {
   const supabase = await createClient();
-  const me = await getCurrentUser(supabase);
+  const me = await getCurrentUser();
   if (!canSeeFinanceiro(me.role)) {
     redirect('/dashboard');
   }

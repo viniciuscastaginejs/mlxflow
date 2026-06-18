@@ -56,8 +56,10 @@ export async function getDeals(supabase: SupabaseClient, filters: DealFilters): 
   const dealIds = deals.map((d) => d.id);
   const responsibleIds = [...new Set(deals.map((d) => d.responsible_id).filter(Boolean))];
 
-  let followupsByDeal: Record<string, Followup[]> = {};
-  if (dealIds.length > 0) {
+  const fetchFollowups = async () => {
+    let followupsByDeal: Record<string, Followup[]> = {};
+    if (dealIds.length === 0) return followupsByDeal;
+
     const { data: followups, error: fError } = await supabase
       .from('pipeline_followups')
       .select('id, deal_id, author_id, content, follow_up_date, created_at')
@@ -85,16 +87,25 @@ export async function getDeals(supabase: SupabaseClient, filters: DealFilters): 
       });
       return acc;
     }, {});
-  }
+    return followupsByDeal;
+  };
 
-  let nameByResponsibleId: Record<string, string> = {};
-  if (responsibleIds.length > 0) {
+  const fetchResponsibleNames = async () => {
+    let nameByResponsibleId: Record<string, string> = {};
+    if (responsibleIds.length === 0) return nameByResponsibleId;
+
     const { data: profiles } = await supabase.from('profiles').select('id, full_name').in('id', responsibleIds);
     nameByResponsibleId = (profiles ?? []).reduce((acc: Record<string, string>, p: any) => {
       acc[p.id] = p.full_name ?? '';
       return acc;
     }, {});
-  }
+    return nameByResponsibleId;
+  };
+
+  const [followupsByDeal, nameByResponsibleId] = await Promise.all([
+    fetchFollowups(),
+    fetchResponsibleNames(),
+  ]);
 
   return deals.map((d) => ({
     id: d.id,

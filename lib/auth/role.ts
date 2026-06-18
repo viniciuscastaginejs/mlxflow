@@ -1,4 +1,5 @@
-import type { SupabaseClient } from '@supabase/supabase-js';
+import { cache } from 'react';
+import { createClient } from '@/lib/supabase/server';
 
 export type Role = 'admin' | 'socio' | 'colaborador' | 'visualizador';
 
@@ -6,12 +7,14 @@ export type CurrentUser = {
   id: string;
   role: Role;
   fullName: string | null;
+  email: string | null;
 };
 
-// Busca o usuário logado + papel (profiles.role). Chamado uma vez por página.
-export async function getCurrentUser(
-  supabase: SupabaseClient
-): Promise<CurrentUser> {
+// Busca o usuário logado + papel (profiles.role).
+// cache() do React deduplica isso por request: mesmo chamado em vários
+// componentes (layout, page, server actions), só roda uma vez.
+export const getCurrentUser = cache(async (): Promise<CurrentUser> => {
+  const supabase = await createClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();
@@ -31,8 +34,9 @@ export async function getCurrentUser(
     id: user.id,
     role: (profile?.role ?? 'visualizador') as Role,
     fullName: profile?.full_name ?? null,
+    email: user.email ?? null,
   };
-}
+});
 
 export const canManageClients = (role: Role) =>
   role === 'admin' || role === 'socio';

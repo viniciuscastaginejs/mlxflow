@@ -14,7 +14,7 @@ export default async function PipelinePage({
 }) {
   const { responsavel } = await searchParams;
   const supabase = await createClient();
-  const me = await getCurrentUser(supabase);
+  const me = await getCurrentUser();
 
   const [deals, clientes, responsaveis] = await Promise.all([
     getDeals(supabase, { responsibleId: responsavel }),

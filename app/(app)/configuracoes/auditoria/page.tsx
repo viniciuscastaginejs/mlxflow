@@ -19,7 +19,7 @@ export default async function AuditoriaPage({
   searchParams: Promise<{ usuario?: string; tabela?: string }>;
 }) {
   const supabase = await createClient();
-  const me = await getCurrentUser(supabase);
+  const me = await getCurrentUser();
   if (!canSeeAuditoria(me.role)) {
     redirect('/dashboard');
   }

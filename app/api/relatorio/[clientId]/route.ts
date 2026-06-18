@@ -14,7 +14,7 @@ const SERVICE_LABELS: Record<string, string> = {
 export async function POST(request: NextRequest, { params }: { params: Promise<{ clientId: string }> }) {
   const { clientId } = await params;
   const supabase = await createClient();
-  const me = await getCurrentUser(supabase);
+  const me = await getCurrentUser();
   if (!canSeeFinanceiro(me.role)) {
     return NextResponse.json({ error: 'Sem permissão.' }, { status: 403 });
   }

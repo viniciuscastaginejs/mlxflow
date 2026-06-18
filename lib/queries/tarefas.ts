@@ -77,8 +77,10 @@ export async function getTasks(
   const responsibleIds = [...new Set(tasks.map((t) => t.assignee_id).filter(Boolean))];
   const clientIds = [...new Set(tasks.map((t) => t.client_id).filter(Boolean))];
 
-  let checklistByTask: Record<string, ChecklistItem[]> = {};
-  if (taskIds.length > 0) {
+  const fetchChecklist = async () => {
+    let checklistByTask: Record<string, ChecklistItem[]> = {};
+    if (taskIds.length === 0) return checklistByTask;
+
     const { data: items, error: itemsError } = await supabase
       .from('task_checklist_items')
       .select('id, task_id, label, done')
@@ -90,10 +92,13 @@ export async function getTasks(
       (acc[i.task_id] ??= []).push({ id: i.id, label: i.label, done: !!i.done });
       return acc;
     }, {});
-  }
+    return checklistByTask;
+  };
 
-  let nameByResponsibleId: Record<string, string> = {};
-  if (responsibleIds.length > 0) {
+  const fetchResponsibleNames = async () => {
+    let nameByResponsibleId: Record<string, string> = {};
+    if (responsibleIds.length === 0) return nameByResponsibleId;
+
     const { data: profiles } = await supabase
       .from('profiles')
       .select('id, full_name')
@@ -102,16 +107,26 @@ export async function getTasks(
       acc[p.id] = p.full_name ?? '';
       return acc;
     }, {});
-  }
+    return nameByResponsibleId;
+  };
 
-  let nameByClientId: Record<string, string> = {};
-  if (clientIds.length > 0) {
+  const fetchClientNames = async () => {
+    let nameByClientId: Record<string, string> = {};
+    if (clientIds.length === 0) return nameByClientId;
+
     const { data: clients } = await supabase.from('clients').select('id, name').in('id', clientIds);
     nameByClientId = (clients ?? []).reduce((acc: Record<string, string>, c: any) => {
       acc[c.id] = c.name;
       return acc;
     }, {});
-  }
+    return nameByClientId;
+  };
+
+  const [checklistByTask, nameByResponsibleId, nameByClientId] = await Promise.all([
+    fetchChecklist(),
+    fetchResponsibleNames(),
+    fetchClientNames(),
+  ]);
 
   return tasks.map((t) => ({
     id: t.id,

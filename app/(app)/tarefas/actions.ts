@@ -19,7 +19,7 @@ export type TaskInput = {
 
 export async function createTask(input: TaskInput): Promise<ActionResult & { id?: string }> {
   const supabase = await createClient();
-  const me = await getCurrentUser(supabase);
+  const me = await getCurrentUser();
   if (isReadOnly(me.role)) return { ok: false, error: 'Sem permissão.' };
   if (!input.title.trim()) return { ok: false, error: 'Título é obrigatório.' };
 
@@ -53,7 +53,7 @@ export async function createTask(input: TaskInput): Promise<ActionResult & { id?
 
 export async function updateTask(taskId: string, input: TaskInput): Promise<ActionResult> {
   const supabase = await createClient();
-  const me = await getCurrentUser(supabase);
+  const me = await getCurrentUser();
   if (isReadOnly(me.role)) return { ok: false, error: 'Sem permissão.' };
   if (!input.title.trim()) return { ok: false, error: 'Título é obrigatório.' };
 
@@ -77,7 +77,7 @@ export async function updateTask(taskId: string, input: TaskInput): Promise<Acti
 
 export async function deleteTask(taskId: string): Promise<ActionResult> {
   const supabase = await createClient();
-  const me = await getCurrentUser(supabase);
+  const me = await getCurrentUser();
   if (isReadOnly(me.role)) return { ok: false, error: 'Sem permissão.' };
 
   await supabase.from('task_checklist_items').delete().eq('task_id', taskId);
@@ -93,7 +93,7 @@ export async function updateTaskStatus(
   status: TaskStatus
 ): Promise<ActionResult> {
   const supabase = await createClient();
-  const me = await getCurrentUser(supabase);
+  const me = await getCurrentUser();
   if (isReadOnly(me.role)) return { ok: false, error: 'Sem permissão.' };
 
   const { error } = await supabase.from('tasks').update({ status }).eq('id', taskId);
@@ -108,7 +108,7 @@ export async function addChecklistItem(
   label: string
 ): Promise<ActionResult & { id?: string }> {
   const supabase = await createClient();
-  const me = await getCurrentUser(supabase);
+  const me = await getCurrentUser();
   if (isReadOnly(me.role)) return { ok: false, error: 'Sem permissão.' };
   if (!label.trim()) return { ok: false, error: 'Item vazio.' };
 
@@ -134,7 +134,7 @@ export async function toggleChecklistItem(
   done: boolean
 ): Promise<ActionResult> {
   const supabase = await createClient();
-  const me = await getCurrentUser(supabase);
+  const me = await getCurrentUser();
   if (isReadOnly(me.role)) return { ok: false, error: 'Sem permissão.' };
 
   const { error } = await supabase
@@ -150,7 +150,7 @@ export async function toggleChecklistItem(
 
 export async function removeChecklistItem(itemId: string): Promise<ActionResult> {
   const supabase = await createClient();
-  const me = await getCurrentUser(supabase);
+  const me = await getCurrentUser();
   if (isReadOnly(me.role)) return { ok: false, error: 'Sem permissão.' };
 
   const { error } = await supabase.from('task_checklist_items').delete().eq('id', itemId);

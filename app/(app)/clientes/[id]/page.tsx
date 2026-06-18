@@ -76,7 +76,7 @@ export default async function ClienteDetalhePage({
   const sp = await searchParams;
   const { aba } = sp;
   const supabase = await createClient();
-  const me = await getCurrentUser(supabase);
+  const me = await getCurrentUser();
   const podeGerenciar = canManageClients(me.role);
   const podeVerFinanceiro = canSeeFinanceiro(me.role);
   const somenteLeitura = isReadOnly(me.role);

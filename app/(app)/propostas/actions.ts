@@ -16,7 +16,7 @@ const SERVICE_LABELS: Record<string, string> = {
 
 export async function createProposta(formData: FormData) {
   const supabase = await createClient();
-  const me = await getCurrentUser(supabase);
+  const me = await getCurrentUser();
   if (!canManageFinanceiro(me.role)) {
     redirect('/propostas?error=' + encodeURIComponent('Sem permissão.'));
   }

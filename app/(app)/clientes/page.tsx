@@ -24,7 +24,7 @@ export default async function ClientesPage({
 }) {
   const { status, responsavel, inativos } = await searchParams;
   const supabase = await createClient();
-  const me = await getCurrentUser(supabase);
+  const me = await getCurrentUser();
   const isColaborador = me.role === 'colaborador';
 
   const [clientes, responsaveis] = await Promise.all([

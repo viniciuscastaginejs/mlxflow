@@ -5,7 +5,7 @@ import Nav from './_nav';
 import Bell from './_bell';
 import { generateNotifications } from '@/lib/notifications/generate';
 import { getNotifications, getUnreadCount } from '@/lib/queries/notifications';
-import type { Role } from '@/lib/auth/role';
+import { getCurrentUser } from '@/lib/auth/role';
 
 export default async function AppLayout({
   children,
@@ -13,25 +13,15 @@ export default async function AppLayout({
   children: React.ReactNode;
 }) {
   const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const me = await getCurrentUser();
 
-  const { data: profile } = await supabase
-    .from('profiles')
-    .select('full_name, role')
-    .eq('id', user!.id)
-    .single();
-
-  const role = (profile?.role ?? 'visualizador') as Role;
-
-  await generateNotifications(supabase, user!.id, role);
+  await generateNotifications(supabase, me.id, me.role);
   const [notifications, unreadCount] = await Promise.all([
-    getNotifications(supabase, user!.id),
-    getUnreadCount(supabase, user!.id),
+    getNotifications(supabase, me.id),
+    getUnreadCount(supabase, me.id),
   ]);
 
-  const nome = profile?.full_name || user?.email || 'Usuário';
+  const nome = me.fullName || me.email || 'Usuário';
   const inicial = nome.trim().charAt(0).toUpperCase();
 
   return (
@@ -47,14 +37,14 @@ export default async function AppLayout({
           </div>
         </div>
 
-        <Nav role={role} />
+        <Nav role={me.role} />
 
         <div className="sidebar-foot">
           <div className="who">
             <div className="who-avatar">{inicial}</div>
             <div>
               <div className="who-name">{nome}</div>
-              <div className="who-role">{profile?.role ?? ''}</div>
+              <div className="who-role">{me.role}</div>
             </div>
           </div>
           <form action={logout}>

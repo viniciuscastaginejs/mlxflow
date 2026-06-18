@@ -7,7 +7,7 @@ import { getCurrentUser, canManageFinanceiro } from '@/lib/auth/role';
 
 export async function saveMonthlyGoal(formData: FormData) {
   const supabase = await createClient();
-  const me = await getCurrentUser(supabase);
+  const me = await getCurrentUser();
   if (!canManageFinanceiro(me.role)) {
     redirect('/configuracoes/metas?error=' + encodeURIComponent('Sem permissão.'));
   }
