@@ -1,10 +1,9 @@
+import { Suspense } from 'react';
 import Image from 'next/image';
-import { createClient } from '@/lib/supabase/server';
 import { logout } from '../login/actions';
 import Nav from './_nav';
 import Bell from './_bell';
-import { generateNotifications } from '@/lib/notifications/generate';
-import { getNotifications, getUnreadCount } from '@/lib/queries/notifications';
+import NotificationsPanel from './_notifications-panel';
 import { getCurrentUser } from '@/lib/auth/role';
 
 export default async function AppLayout({
@@ -12,14 +11,7 @@ export default async function AppLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const supabase = await createClient();
   const me = await getCurrentUser();
-
-  await generateNotifications(supabase, me.id, me.role);
-  const [notifications, unreadCount] = await Promise.all([
-    getNotifications(supabase, me.id),
-    getUnreadCount(supabase, me.id),
-  ]);
 
   const nome = me.fullName || me.email || 'Usuário';
   const inicial = nome.trim().charAt(0).toUpperCase();
@@ -33,7 +25,9 @@ export default async function AppLayout({
             MLX <span>Flow</span>
           </div>
           <div style={{ marginLeft: 'auto' }}>
-            <Bell notifications={notifications} unreadCount={unreadCount} />
+            <Suspense fallback={<Bell notifications={[]} unreadCount={0} />}>
+              <NotificationsPanel userId={me.id} role={me.role} />
+            </Suspense>
           </div>
         </div>
 

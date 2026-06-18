@@ -28,60 +28,64 @@ function diasNaFrente(dias: number) {
 
 // Roda a cada carregamento autenticado: detecta condições e cria notificações
 // novas (uma única vez por item, via dedup em related_id+type).
-export async function generateNotifications(
+// Cada bloco abaixo só depende da query inicial; os 4 blocos não dependem
+// entre si, então rodam em paralelo via Promise.all em generateNotifications.
+
+async function pagamentosVencendo(
   supabase: SupabaseClient,
   userId: string,
   role: Role
-): Promise<void> {
-  const candidatos: NovaNotificacao[] = [];
+): Promise<NovaNotificacao[]> {
+  if (!canSeeFinanceiro(role)) return [];
+
   const hoje = new Date().toISOString().slice(0, 10);
+  const ano = new Date().getFullYear();
+  const { data: revenues } = await supabase
+    .from('revenues')
+    .select('id, due_day, client_id, clients(name)')
+    .eq('year', ano);
 
-  // 1) Pagamento vencendo/atrasado — só pra quem vê financeiro
-  if (canSeeFinanceiro(role)) {
-    const ano = new Date().getFullYear();
-    const { data: revenues } = await supabase
-      .from('revenues')
-      .select('id, due_day, client_id, clients(name)')
-      .eq('year', ano);
+  const revenueIds = (revenues ?? []).map((r: any) => r.id);
+  if (revenueIds.length === 0) return [];
 
-    const revenueIds = (revenues ?? []).map((r: any) => r.id);
-    if (revenueIds.length > 0) {
-      const { data: installments } = await supabase
-        .from('revenue_installments')
-        .select('id, revenue_id, month, status')
-        .in('revenue_id', revenueIds)
-        .in('status', ['pendente', 'atrasado']);
+  const { data: installments } = await supabase
+    .from('revenue_installments')
+    .select('id, revenue_id, month, status')
+    .in('revenue_id', revenueIds)
+    .in('status', ['pendente', 'atrasado']);
 
-      const revenueById = (revenues ?? []).reduce((acc: Record<string, any>, r: any) => {
-        acc[r.id] = r;
-        return acc;
-      }, {});
+  const revenueById = (revenues ?? []).reduce((acc: Record<string, any>, r: any) => {
+    acc[r.id] = r;
+    return acc;
+  }, {});
 
-      for (const inst of installments ?? []) {
-        const rev = revenueById[(inst as any).revenue_id];
-        if (!rev) continue;
-        const dia = Math.min(rev.due_day || 1, 28);
-        const vencimento = new Date(ano, (inst as any).month - 1, dia).toISOString().slice(0, 10);
-        const atrasado = (inst as any).status === 'atrasado';
-        const vencendoEmBreve = vencimento >= hoje && vencimento <= diasNaFrente(DIAS_VENCIMENTO);
+  const candidatos: NovaNotificacao[] = [];
+  for (const inst of installments ?? []) {
+    const rev = revenueById[(inst as any).revenue_id];
+    if (!rev) continue;
+    const dia = Math.min(rev.due_day || 1, 28);
+    const vencimento = new Date(ano, (inst as any).month - 1, dia).toISOString().slice(0, 10);
+    const atrasado = (inst as any).status === 'atrasado';
+    const vencendoEmBreve = vencimento >= hoje && vencimento <= diasNaFrente(DIAS_VENCIMENTO);
 
-        if (atrasado || vencendoEmBreve) {
-          const nomeCliente = rev.clients?.name ?? 'Receita avulsa';
-          candidatos.push({
-            user_id: userId,
-            type: 'pagamento_vencendo',
-            title: atrasado ? `Pagamento atrasado: ${nomeCliente}` : `Pagamento vence em breve: ${nomeCliente}`,
-            body: `Parcela de ${vencimento.split('-').reverse().join('/')}.`,
-            related_table: 'revenue_installments',
-            related_id: (inst as any).id,
-            read: false,
-          });
-        }
-      }
+    if (atrasado || vencendoEmBreve) {
+      const nomeCliente = rev.clients?.name ?? 'Receita avulsa';
+      candidatos.push({
+        user_id: userId,
+        type: 'pagamento_vencendo',
+        title: atrasado ? `Pagamento atrasado: ${nomeCliente}` : `Pagamento vence em breve: ${nomeCliente}`,
+        body: `Parcela de ${vencimento.split('-').reverse().join('/')}.`,
+        related_table: 'revenue_installments',
+        related_id: (inst as any).id,
+        read: false,
+      });
     }
   }
+  return candidatos;
+}
 
-  // 2) Tarefa atrasada — assignee = usuário atual
+async function tarefasAtrasadas(supabase: SupabaseClient, userId: string): Promise<NovaNotificacao[]> {
+  const hoje = new Date().toISOString().slice(0, 10);
   const { data: tarefas } = await supabase
     .from('tasks')
     .select('id, title, due_date, status')
@@ -89,24 +93,24 @@ export async function generateNotifications(
     .lt('due_date', hoje)
     .neq('status', 'concluido');
 
-  for (const t of tarefas ?? []) {
-    candidatos.push({
-      user_id: userId,
-      type: 'tarefa_atrasada',
-      title: `Tarefa atrasada: ${(t as any).title}`,
-      body: `Prazo era ${String((t as any).due_date).split('-').reverse().join('/')}.`,
-      related_table: 'tasks',
-      related_id: (t as any).id,
-      read: false,
-    });
-  }
+  return (tarefas ?? []).map((t: any) => ({
+    user_id: userId,
+    type: 'tarefa_atrasada',
+    title: `Tarefa atrasada: ${t.title}`,
+    body: `Prazo era ${String(t.due_date).split('-').reverse().join('/')}.`,
+    related_table: 'tasks',
+    related_id: t.id,
+    read: false,
+  }));
+}
 
-  // 3) Post pendente de aprovação — cliente cujo responsável é o usuário atual
+async function postsPendentes(supabase: SupabaseClient, userId: string): Promise<NovaNotificacao[]> {
   const { data: posts } = await supabase
     .from('editorial_posts')
     .select('id, caption, scheduled_date, client_id, clients(name, responsible_id)')
     .eq('status', 'aprovacao_pendente');
 
+  const candidatos: NovaNotificacao[] = [];
   for (const p of posts ?? []) {
     const cliente = (p as any).clients;
     if (cliente?.responsible_id !== userId) continue;
@@ -120,8 +124,10 @@ export async function generateNotifications(
       read: false,
     });
   }
+  return candidatos;
+}
 
-  // 4) Lead sem follow-up — responsável = usuário atual
+async function leadsSemFollowup(supabase: SupabaseClient, userId: string): Promise<NovaNotificacao[]> {
   const { data: deals } = await supabase
     .from('pipeline_deals')
     .select('id, company_name, responsible_id, stage, created_at')
@@ -143,6 +149,7 @@ export async function generateNotifications(
   }
 
   const limite = diasAtras(DIAS_SEM_FOLLOWUP);
+  const candidatos: NovaNotificacao[] = [];
   for (const d of deals ?? []) {
     const ultimo = lastFollowupByDeal[(d as any).id] ?? (d as any).created_at;
     if (ultimo.slice(0, 10) <= limite) {
@@ -157,6 +164,23 @@ export async function generateNotifications(
       });
     }
   }
+  return candidatos;
+}
+
+// Roda a cada carregamento autenticado: detecta condições e cria notificações
+// novas (uma única vez por item, via dedup em related_id+type).
+export async function generateNotifications(
+  supabase: SupabaseClient,
+  userId: string,
+  role: Role
+): Promise<void> {
+  const blocos = await Promise.all([
+    pagamentosVencendo(supabase, userId, role),
+    tarefasAtrasadas(supabase, userId),
+    postsPendentes(supabase, userId),
+    leadsSemFollowup(supabase, userId),
+  ]);
+  const candidatos = blocos.flat();
 
   if (candidatos.length === 0) return;
 
