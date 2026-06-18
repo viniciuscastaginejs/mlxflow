@@ -1,4 +1,5 @@
 import type { SupabaseClient } from '@supabase/supabase-js';
+import { getMrr } from './financeiro';
 
 export type AtividadeRecente = {
   id: string;
@@ -40,7 +41,7 @@ export async function getDashboardData(
   const hojeISO = hoje.toISOString().slice(0, 10);
 
   const [
-    mrrRes,
+    mrr,
     clientesRes,
     tarefasRes,
     pipelineRes,
@@ -49,8 +50,8 @@ export async function getDashboardData(
     vencRes,
     atividadeRes,
   ] = await Promise.all([
-    // MRR (view)
-    supabase.from('v_mrr').select('mrr').single(),
+    // MRR calculado no código (exclui clientes 'servico_unico')
+    getMrr(supabase),
 
     // clientes ativos
     supabase
@@ -136,7 +137,7 @@ export async function getDashboardData(
   const meta = metaRes.data;
 
   return {
-    mrr: Number(mrrRes.data?.mrr ?? 0),
+    mrr,
     clientesAtivos: clientesRes.count ?? 0,
     tarefasAtrasadas: tarefasRes.count ?? 0,
     pipeline: { quantidade: pipelineRows.length, valorEstimado },

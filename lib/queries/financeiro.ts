@@ -81,6 +81,22 @@ export type FinanceiroAno = {
   mrr: number;
 };
 
+// MRR calculado direto no código (não pela view v_mrr): soma client_services
+// ativos, excluindo clientes 'servico_unico' — esses não são recorrentes,
+// seu valor só conta no mês específico via uma receita avulsa em /financeiro.
+export async function getMrr(supabase: SupabaseClient): Promise<number> {
+  const { data, error } = await supabase
+    .from('client_services')
+    .select('monthly_value, clients!inner(status)')
+    .eq('active', true);
+  if (error) throw error;
+
+  return (data ?? []).reduce((acc: number, s: any) => {
+    if (s.clients?.status === 'servico_unico') return acc;
+    return acc + Number(s.monthly_value || 0);
+  }, 0);
+}
+
 function blankMonthlyTotals(): MonthlyTotal[] {
   return Array.from({ length: 12 }, (_, i) => ({
     month: i + 1,
@@ -95,7 +111,7 @@ export async function getFinanceiroAno(
   supabase: SupabaseClient,
   year: number
 ): Promise<FinanceiroAno> {
-  const [revenuesRes, expensesRes, partnersRes, mrrRes] = await Promise.all([
+  const [revenuesRes, expensesRes, partnersRes, mrr] = await Promise.all([
     supabase
       .from('revenues')
       .select('id, client_id, description, type')
@@ -111,7 +127,7 @@ export async function getFinanceiroAno(
       .select('id, partner_name, type, quantity')
       .eq('year', year)
       .order('created_at', { ascending: true }),
-    supabase.from('v_mrr').select('mrr').single(),
+    getMrr(supabase),
   ]);
 
   if (revenuesRes.error) throw revenuesRes.error;
@@ -237,6 +253,50 @@ export async function getFinanceiroAno(
     expenses,
     partners,
     monthlyTotals,
-    mrr: Number(mrrRes.data?.mrr ?? 0),
+    mrr,
   };
+}
+
+// Receitas de um único cliente em um ano — usado no grid mês x status dentro
+// da aba financeira do cliente (mesmo modelo de dados de getFinanceiroAno,
+// só que filtrado a um client_id em vez de trazer todos).
+export async function getClienteRevenuesAno(
+  supabase: SupabaseClient,
+  clientId: string,
+  year: number
+): Promise<RevenueRow[]> {
+  const { data: revenuesData, error } = await supabase
+    .from('revenues')
+    .select('id, description, type')
+    .eq('client_id', clientId)
+    .eq('year', year)
+    .order('created_at', { ascending: true });
+  if (error) throw error;
+
+  const revenueIds = (revenuesData ?? []).map((r: any) => r.id);
+  let installmentsByRevenue: Record<string, RevenueInstallment[]> = {};
+  if (revenueIds.length > 0) {
+    const { data: installments, error: instError } = await supabase
+      .from('revenue_installments')
+      .select('id, revenue_id, month, amount, status')
+      .in('revenue_id', revenueIds);
+    if (instError) throw instError;
+
+    installmentsByRevenue = (installments ?? []).reduce(
+      (acc: Record<string, RevenueInstallment[]>, i: any) => {
+        (acc[i.revenue_id] ??= []).push({ id: i.id, month: i.month, amount: Number(i.amount || 0), status: i.status });
+        return acc;
+      },
+      {}
+    );
+  }
+
+  return (revenuesData ?? []).map((r: any) => ({
+    id: r.id,
+    clientId,
+    clientName: null,
+    description: r.description ?? null,
+    type: r.type,
+    installments: (installmentsByRevenue[r.id] ?? []).sort((a, b) => a.month - b.month),
+  }));
 }

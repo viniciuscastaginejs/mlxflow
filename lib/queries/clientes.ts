@@ -95,7 +95,9 @@ export async function getClientesList(
     status: c.status,
     responsibleId: c.responsible_id ?? null,
     responsibleName: c.profiles?.full_name ?? null,
-    valorMensalTotal: valoresPorCliente[c.id] ?? 0,
+    // Serviço único não é recorrente: seu valor não entra no total mensal,
+    // só conta no mês em que foi de fato prestado (via receita avulsa em /financeiro).
+    valorMensalTotal: c.status === 'servico_unico' ? 0 : valoresPorCliente[c.id] ?? 0,
   }));
 }
 

@@ -6,6 +6,7 @@ import {
   getCurrentUser,
   canManageClients,
   canSeeFinanceiro,
+  canManageFinanceiro,
   isReadOnly,
 } from '@/lib/auth/role';
 import {
@@ -21,10 +22,12 @@ import {
 } from '@/lib/queries/cliente-detalhe';
 import { getResponsaveis, STATUS_LABEL, STATUS_PILL } from '@/lib/queries/clientes';
 import { getClientPosts, type Platform } from '@/lib/queries/editorial';
+import { getClienteRevenuesAno } from '@/lib/queries/financeiro';
 import { brl, num, dataCurta } from '@/lib/format';
 import Notify from '../../_notify';
 import { CheckIcon } from '../../_icons';
 import CalendarioTab from '../_calendario-tab';
+import ClienteFinanceiroGrid from '../_financeiro-grid';
 import {
   updateClienteDados,
   addClientService,
@@ -70,6 +73,7 @@ export default async function ClienteDetalhePage({
     platform?: string;
     modal?: string;
     editar?: string;
+    anoFinanceiro?: string;
   }>;
 }) {
   const { id } = await params;
@@ -98,7 +102,14 @@ export default async function ClienteDetalhePage({
     redirect('/clientes');
   }
 
-  const financeiro = podeVerFinanceiro ? await getClienteFinanceiro(supabase, id) : null;
+  const anoAtual = new Date().getFullYear();
+  const yearFinanceiro = Number(sp.anoFinanceiro) || anoAtual;
+  const [financeiro, receitasCliente] = podeVerFinanceiro
+    ? await Promise.all([
+        getClienteFinanceiro(supabase, id),
+        getClienteRevenuesAno(supabase, id, yearFinanceiro),
+      ])
+    : [null, []];
 
   let contratoUrl: string | null = null;
   if (contrato?.filePath) {
@@ -451,6 +462,30 @@ export default async function ClienteDetalhePage({
               </div>
             </form>
           </div>
+
+          <form method="get" className="filters">
+            <input type="hidden" name="aba" value="financeiro" />
+            <div className="field-lt">
+              <label htmlFor="anoFinanceiro">Ano</label>
+              <select id="anoFinanceiro" name="anoFinanceiro" defaultValue={String(yearFinanceiro)}>
+                {Array.from({ length: 6 }, (_, i) => anoAtual + 1 - i).map((a) => (
+                  <option key={a} value={a}>
+                    {a}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <button type="submit" className="btn btn--inline btn--sm">
+              Ver
+            </button>
+          </form>
+
+          <ClienteFinanceiroGrid
+            clientId={id}
+            year={yearFinanceiro}
+            revenues={receitasCliente}
+            canManage={canManageFinanceiro(me.role)}
+          />
         </div>
       )}
 
